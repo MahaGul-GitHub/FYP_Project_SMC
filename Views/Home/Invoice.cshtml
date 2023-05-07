@@ -1,0 +1,125 @@
+﻿@using SwissMetroCookware.Models
+@{
+    ViewBag.Title = "Invoice";
+    Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
+    Order o = (Order)ViewBag.o;
+    List<OrderDetail> list = (List<OrderDetail>)ViewBag.od_list;
+    Model1 db = new Model1();
+    
+
+}
+
+<main class="main">
+    <div class="page-header breadcrumb-wrap">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="@Url.Action("IndexCustomer" , "Home")" rel="nofollow">Home</a>
+                <span></span> My Account
+                <span></span> My Orders
+                <span></span> Invoice
+
+            </div>
+        </div>
+    </div>
+    <section class="mt-50 mb-50">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 mb-sm-15">
+                    <div class="toggle_info">
+                        <span><i class="fi-rs-info mr-10"></i><span class="text-muted"></span> <a href="#" data-bs-toggle="collapse" class="collapsed" aria-expanded="false">ORDER # @o.id</a> &nbsp; (@o.status)</span>
+                        <br />
+                        <span>@o.Customer.name</span>
+                        <br />
+                        <span>@o.email</span>
+                        <br />
+                        <span>@o.address</span>
+                        <br />
+                        <span>@o.contact</span>
+                        <br />
+
+                    </div>
+                    
+                </div>
+                <div class="col-lg-6">
+                    <div class="toggle_info">
+                        <span><i class="fi-rs-label mr-10"></i><span class="text-muted"></span> <a href="#" data-bs-toggle="collapse" class="collapsed" aria-expanded="false"> @db.Companies.Select(x => x.name).FirstOrDefault().</a></span>
+                        <br />
+                        <span>Phone Number: @db.Companies.Select(x => x.contact1).FirstOrDefault()</span>
+                        <br />
+                        <span>Alternate: @db.Companies.Select(x => x.contact2).FirstOrDefault()</span>
+                        <br />
+                        <span>Fax: @db.Companies.Select(x => x.fax).FirstOrDefault()</span>
+                        <br />
+                        <span>@db.Companies.Select(x => x.address).FirstOrDefault()</span>
+                        <br />
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="divider mt-50 mb-50"></div>
+                </div>
+            </div>
+            <div class="row">
+                
+                <div class="col-md-12">
+                    <div class="order_review">
+                        <div class="mb-20">
+                            <h4>Your Orders</h4>
+                        </div>
+                        <div class="table-responsive order_table text-center">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th colspan="2">Product</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in list)
+                                    { 
+                                    <tr>
+                                        <td class="image product-thumbnail"><img src="@Url.Content(item.Product.picture)" alt="SMC"></td>
+                                        <td>
+                                            <h5><a href="shop-product-full.html">@item.Product.name</a></h5> <span class="product-qty">x @item.quantity</span>
+                                        </td>
+                                        <td>
+                                            @{
+                                                int sub = (Convert.ToInt32(item.sale_price) * item.quantity);
+                                             }
+                                            @sub
+                                        </td>
+                                    </tr>
+                                    }
+                                    
+                                    <tr>
+                                        <th>SubTotal</th>
+                                        <td class="product-subtotal" colspan="2">Rs. @o.amount</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Shipping</th>
+                                        <td colspan="2"><em>Free Shipping</em></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Total</th>
+                                        <td colspan="2" class="product-subtotal"><span class="font-xl text-brand fw-900">Rs. @o.amount</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="bt-1 border-color-1 mt-30 mb-30"></div>
+                        
+                        <button onclick="printFunction()" class="btn btn-fill-out btn-block mt-30">Print Invoice</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<script>
+      function printFunction() {
+        window.print();
+      }
+</script>

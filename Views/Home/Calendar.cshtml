@@ -1,0 +1,48 @@
+﻿@using SwissMetroCookware.Models
+@{ 
+    Model1 db = new Model1();
+    Misc calendar_link = db.Miscs.Where(x => x.id == 7).FirstOrDefault();
+    String s = calendar_link.description;
+}
+                                    <div class="page-header">
+                                      
+                                        <div class="page-header-breadcrumb">
+                                            <ul class="breadcrumb-title">
+                                                <li class="breadcrumb-item">
+                                                    <a href="@Url.Action("IndexAdmin" , "Home")">
+                                                        <i class="icofont icofont-home"></i>
+                                                    </a>
+                                                </li>
+                                                <li class="breadcrumb-item">
+                                                    <a href="#">Pages</a>
+                                                </li>
+                                                <li class="breadcrumb-item">
+                                                    <a href="#">Agenda</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="page-body">
+                                        <div class="row">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <h5>Agenda</h5>
+                                                            <div class="card-header-right">
+                                                                <i class="icofont icofont-rounded-down"></i>
+                                                                <i class="icofont icofont-refresh"></i>
+                                                                <i class="icofont icofont-close-circled"></i>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card-block">
+                                                            <iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&bgcolor=%23ffffff&ctz=Asia%2FKarachi&showTitle=1&showCalendars=0&src=YXJpYW5hZ3JhY2UzNjk2QGdtYWlsLmNvbQ&src=ZW4ucGsjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&color=%237986CB&color=%237986CB" style="border:solid 1px #777" width="1000" height="600" frameborder="0" scrolling="no"></iframe>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                                    </div>

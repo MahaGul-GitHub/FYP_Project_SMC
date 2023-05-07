@@ -1,0 +1,106 @@
+﻿@using SwissMetroCookware.Models
+@{
+    ViewBag.Title = "ReviewOrders";
+    List<Order> o = ViewBag.o;
+    int serial = 1;
+    Model1 db = new Model1();
+    List<Logistic> l = db.Logistics.ToList();
+}
+
+
+<div class="page-header">
+    @*<div class="page-header-title">
+        <h4>New Orders</h4>
+    </div>*@
+</div>
+<div class="page-body">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Orders To Be Shipped</h5>
+                    <div class="card-header-right">
+                        <i class="icofont icofont-rounded-down"></i>
+                        <i class="icofont icofont-refresh"></i>
+                        <i class="icofont icofont-close-circled"></i>
+                    </div>
+                </div>
+                <div class="card-block">
+                    <table class="table table-bordered table-hover table-styling">
+                        <tr class="table-primary">
+                            <th width="30px">Sr.#</th>
+                            <th>
+                                Order#
+                            </th>
+                            <th>
+                                Customer
+                            </th>
+                            <th>
+                                Date
+                            </th>
+                            <th>
+                                Logistic Partner
+                            </th>
+
+                            <th>
+                            </th>
+                        </tr>
+                        @if (o.Count() == 0 || o == null)
+                        {
+                            <tr><td colspan="5"><center><span>Nothing To Show Here!</span></center></td></tr>
+                        }
+                        else
+                        {
+                            foreach (var item in o)
+                            {
+                               
+                    <tr>
+                        <td>
+                            @serial
+                        </td>
+
+                        <td>
+                            @item.id
+                        </td>
+                        <td>
+                            @item.Customer.name
+                        </td>
+                        <td>
+                            @item.date.ToLongDateString()
+                        </td>
+                        @using (Html.BeginForm("AssignLogistics", "Home", FormMethod.Post))
+                        {
+                        @Html.AntiForgeryToken()
+
+                        <td>
+                            <div class="form-group">
+                                <select class="form-control" name="logistic" required>
+                                    @foreach (var i in l)
+                                    {
+                                        <option value="@i.id">@i.name</option>
+                                    }
+                                </select>
+                            </div>
+                            <input name="id" value="@item.id" hidden/>
+                        </td>
+
+                        <td>
+                            <center>
+                                <button type="submit" class="btn btn-primary btn-sm btn-outline">Save</button>
+                            </center>
+                        </td>
+                        }
+                    </tr>
+                                    serial++;
+                                }
+                            
+                        }
+                        </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

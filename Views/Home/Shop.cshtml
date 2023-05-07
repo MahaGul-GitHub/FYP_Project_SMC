@@ -1,0 +1,157 @@
+﻿@model SwissMetroCookware.Models.ShopModel
+
+@{
+    Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
+}
+
+<main class="main">
+    <div class="page-header breadcrumb-wrap">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="@Url.Action(" IndexCustomer" , "Home" )" rel="nofollow">Home</a>
+                <span></span> Shop
+            </div>
+        </div>
+    </div>
+    <section class="mt-50 mb-50">
+        <div class="container">
+            <div class="row flex-row-reverse">
+                <div class="col-lg-9">
+                    <div class="shop-product-fillter">
+                        <div class="totall-product">
+                            <p> We found <strong class="text-brand">@Model.Pro.Count()</strong> items for you!</p>
+                        </div>
+
+                    </div>
+                    <div class="row product-grid-3">
+                        @foreach (var p in Model.Pro)
+                        {
+                            <div class="col-lg-4 col-md-4 col-12 col-sm-6">
+                                <div class="product-cart-wrap mb-30">
+                                    <div class="product-img-action-wrap">
+                                        <div class="product-img product-img-zoom">
+                                            <a href="@Url.Action("SingleProduct" , "Home" , new { id = p.id })">
+                                                <img class="default-img" src="@Url.Content(p.picture)" alt="" height="190px" width="130px">
+                                                <img class="hover-img" src="@Url.Content(p.picture)" alt="" height="190px" width="130px">
+                                            </a>
+                                        </div>
+                                        <div class="product-action-1">
+                                            <a aria-label="Add To Wishlist" class="action-btn hover-up" href="@Url.Action("AddToWishlist" , "Home" , new{ id=p.id})"><i class="fi-rs-heart"></i></a>
+                                        </div>
+                                        @if (p.quantity == 0)
+                                        {
+
+                                            <div class="product-badges product-badges-position product-badges-mrg">
+                                                <span class="featured">Out of Stock</span>
+                                            </div>
+                                        }
+
+                                        else if (p.sale_percent != "0" && p.sale_percent != null)
+                                        {
+                                            <div class="product-badges product-badges-position product-badges-mrg">
+                                                <span class="sale">- @p.sale_percent %</span>
+                                            </div>
+                                        }
+                                        else if (p.featured_product == "Yes")
+                                        {
+                                            <div class="product-badges product-badges-position product-badges-mrg">
+                                                <span class="hot">Featured</span>
+                                            </div>
+                                        }
+
+                                    </div>
+                                    <div class="product-content-wrap">
+                                        <div class="product-category">
+                                            <a href="shop-grid-right.html">@p.SubCategory.name</a>
+                                        </div>
+                                        <h2><a href="@Url.Action("SingleProduct" , "Home" , new { id = p.id})">@p.name</a></h2>
+                                        @*<div class="rating-result" title="90%">
+                                            <span>
+                                                <span>90%</span>
+                                            </span>
+                                        </div>*@
+                                        <div class="product-price">
+                                            @{
+                                                int price = 0;
+                                                int percent = 0;
+                                                int discount_price = 0;
+                                                int new_price = 0;
+
+                                                price = Convert.ToInt32(p.sale_price);
+                                            }
+
+                                            @if (p.sale_percent != "0" && p.sale_percent != null)
+                                            {
+                                                percent = Convert.ToInt32(p.sale_percent);
+                                                discount_price = (price * percent) / 100;
+                                                new_price = price - discount_price;
+                                                <p height="40px">
+                                                    <span>Rs. @new_price</span>
+                                                    <span class="old-price">Rs. @price</span>
+                                                </p>
+                                            }
+                                            else
+                                            {
+                                                <span>Rs. @Convert.ToInt32(p.sale_price)</span>
+                                            }
+
+                                        </div>
+                                        <div class="product-action-1 show">
+                                            @if (p.quantity == 0)
+                                            {
+                                                <a aria-label="Add To Cart" class="action-btn btn-disabled hover-up" href="#"><i class="fi-rs-shopping-bag-add"></i></a>
+                                            }
+                                            else
+                                            {
+                                                <a aria-label="Add To Cart" class="action-btn hover-up" href="@Url.Action("AddToCart", "Home", new { id = p.id })"><i class="fi-rs-shopping-bag-add"></i></a>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <!--pagination-->
+                    @*<div class="pagination-area mt-15 mb-sm-5 mb-lg-0">
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-start">
+                                <li class="page-item active"><a class="page-link" href="#">01</a></li>
+                                <li class="page-item"><a class="page-link" href="#">02</a></li>
+                                <li class="page-item"><a class="page-link" href="#">03</a></li>
+                                <li class="page-item"><a class="page-link dot" href="#">...</a></li>
+                                <li class="page-item"><a class="page-link" href="#">16</a></li>
+                                <li class="page-item"><a class="page-link" href="#"><i class="fi-rs-angle-double-small-right"></i></a></li>
+                            </ul>
+                        </nav>
+                    </div>*@
+                </div>
+                <div class="col-lg-3 primary-sidebar sticky-sidebar">
+                    <div class="widget-category mb-30">
+                        <h5 class="section-title style-1 mb-30 wow fadeIn animated">Category</h5>
+                        <ul class="categories">
+                            @foreach (var c in Model.Cat)
+                            {
+                            <ul>
+                                <a href="#">@c.name</a>
+
+
+                                @foreach (var s in Model.Sub)
+                                {
+                                    if (s.Category.name == c.name)
+                                    {
+                                        <li><a href="@Url.Action("Shop", "Home", new { id = s.id})">@s.name</a></li>
+                                    }
+                                }
+                            </ul>
+                            }
+                        </ul>
+                    </div>
+                    <!-- Fillter By Price -->
+                    <!-- Product sidebar Widget -->
+                    
+
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

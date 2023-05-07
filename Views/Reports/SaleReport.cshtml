@@ -1,0 +1,122 @@
+﻿@model IEnumerable<SwissMetroCookware.Models.OrderDetail>
+@{
+    ViewBag.Title = "Sale Report";
+    int count = 1;
+}
+
+<div class="page-header">
+    <div class="page-header-title">
+        <h4>Report</h4>
+    </div>
+</div>
+<div class="page-body">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Sale Report</h5>
+                    <div class="card-header-right">
+                        <i class="icofont icofont-rounded-down"></i>
+                        <i class="icofont icofont-refresh"></i>
+                        <i class="icofont icofont-close-circled"></i>
+                    </div>
+                </div>
+                <div class="card-block">
+                    @using (Html.BeginForm("SaleReport", "Reports", FormMethod.Post))
+                    {
+                        <table class="table table-bordered table-hover table-styling">
+                            <tr>
+                                <th style="padding:3px;">Date From:</th>
+                                <td style="padding:5px;"><input type="datetime-local" name="DateFrom" class="form-control" value="@ViewBag.DateFrom" /></td>
+                                <th style="padding:3px;">Data To:</th>
+                                <td style="padding:5px;"><input type="datetime-local" name="DateTo" class="form-control" value="@ViewBag.DateTo" /></td>
+                                <td style="padding:5px;"><input id="btn1" type="submit" value="Generate Report" class="btn btn-primary btn-block" /></td>
+                            </tr>
+                            <tr>
+                                <th style="padding:3px;">Category:</th>
+                                <td style="padding:5px;"> @Html.DropDownList("Category", ViewBag.Category as SelectList, "Select Category", htmlAttributes: new { @class = "form-control" })</td>
+                                <th style="padding:3px;">Product:</th>
+                                <td style="padding:5px;"> @Html.DropDownList("Product", ViewBag.Product as SelectList, "Select Product", htmlAttributes: new { @class = "form-control" })</td>
+                                <td style="padding:5px;"><input id="btn2" onclick="return PrintFunction();" type="button" value="Print Report" class="btn btn-primary btn-block" /></td>
+                            </tr>
+                        </table>
+                    }
+                    <br />
+                    <table class="table table-bordered table-hover table-styling">
+                        <tr class="table-primary">
+                            <th>
+                                Sr #
+                            </th>
+                            <th>
+                                Order Id
+                            </th>
+                            <th>
+                                Name
+                            </th>
+                            <th>
+                                Email
+                            </th>
+                            <th>
+                                Contact
+                            </th>
+                            <th>
+                                Status
+                            </th>
+                            <th>
+                                Date
+                            </th>
+                            <th>
+                                Action
+                            </th>
+
+                        </tr>
+
+                        @foreach (var o in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @count
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => o.id)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => o.Order.Customer.name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => o.Order.email)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => o.Order.contact)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => o.Order.status)
+                                </td>
+                                <td>
+                                    @DateTime.Parse(o.Order.date.ToString()).ToLongDateString()
+                                </td>
+
+                                <td>
+                                    <a href="@Url.Action("Invoice","Reports", new { id = o.Order.id })" class="btn btn-sm btn-primary btn-block">View Invoice</a>
+                                </td>
+
+                            </tr>
+                            count++;
+                        }
+
+                    </table>
+                    <button onclick="printFunction()" class="btn btn-fill-out btn-block mt-30">Print</button>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function printFunction() {
+        window.print();
+    }
+</script>

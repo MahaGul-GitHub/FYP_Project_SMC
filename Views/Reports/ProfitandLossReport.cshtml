@@ -1,0 +1,122 @@
+﻿@model IEnumerable<SwissMetroCookware.Models.Order>
+@{
+    ViewBag.Title = "Profit and Loss Report";
+    int number = 0;
+}
+
+<div class="page-header">
+    <div class="page-header-title">
+        <h4>Report</h4>
+    </div>
+</div>
+<div class="page-body">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Profit and Loss Report</h5>
+                    <div class="card-header-right">
+                        <i class="icofont icofont-rounded-down"></i>
+                        <i class="icofont icofont-refresh"></i>
+                        <i class="icofont icofont-close-circled"></i>
+                    </div>
+                </div>
+                <div class="card-block">
+                    @{decimal? NetProfit = 0;}
+                    @using (Html.BeginForm("ProfitandLossReport", "Reports", FormMethod.Post))
+                    {
+                        <table class="table table-bordered table-hover table-styling">
+                            <tr>
+                                <th style="padding:3px;">Date From:</th>
+                                <td style="padding:5px;"><input type="datetime-local" name="DateFrom" class="form-control" value="@ViewBag.DateFrom" /></td>
+                                <th style="padding:3px;">Data To:</th>
+                                <td style="padding:5px;"><input type="datetime-local" name="DateTo" class="form-control" value="@ViewBag.DateTo" /></td>
+                                <td style="padding:5px;"><input id="btn1" type="submit" value="Generate Report" class="btn btn-primary btn-block" /></td>
+                            </tr>
+                            <tr>
+                                <th style="padding:3px;">Category:</th>
+                                <td style="padding:5px;"> @Html.DropDownList("Category", ViewBag.Category as SelectList, "Select Category", htmlAttributes: new { @class = "form-control" })</td>
+                                <th style="padding:3px;">Product:</th>
+                                <td style="padding:5px;"> @Html.DropDownList("Product", ViewBag.Product as SelectList, "Select Product", htmlAttributes: new { @class = "form-control" })</td>
+                                <td style="padding:5px;"><input id="btn2" onclick="return PrintFunction();" type="button" value="Print Report" class="btn btn-primary btn-block" /></td>
+                            </tr>
+                        </table>
+                    }
+                    <br />
+                    <table class="table table-bordered table-hover table-styling">
+                        <tr class="table-primary">
+                            <th>
+                                Sr #
+                            </th>
+                            <th>
+                                Order Id
+                            </th>
+                            <th>
+                                 Date
+                            </th>
+                            <th>
+                                 Name
+                            </th>
+                            <th>
+                                 Sale Cost
+                            </th>
+                            <th>
+                                 Cost Price
+                            </th>
+                            <th>
+                                Gross Profit & Loss
+                            </th>
+                            <th>
+                                Action
+                            </th>
+
+                        </tr>
+
+                        @foreach (var o in Model)
+                        {
+                            number++;
+                            <tr>
+                                <td>@number</td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => o.id)
+                                </td>
+                                <td>
+                                    @DateTime.Parse(o.date.ToString()).ToLongDateString()
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => o.Customer.name)
+                                </td>
+                                <td>
+                                    @o.OrderDetails.Sum(x => x.sale_price * x.quantity)
+                                </td>
+                                <td>
+                                    @o.OrderDetails.Sum(x => x.cost_price * x.quantity)
+                                </td>
+                                <td>
+                                    @(o.OrderDetails.Sum(x => x.sale_price * x.quantity) - o.OrderDetails.Sum(x => x.cost_price * x.quantity))
+                                </td>
+                                <td>
+                                    <a href="@Url.Action("Invoice","Reports", new { id = o.id })" class="btn btn-sm btn-primary btn-block">View Invoice</a>
+                                </td>
+                            </tr>
+                            NetProfit += (o.OrderDetails.Sum(x => x.sale_price * x.quantity) - o.OrderDetails.Sum(x => x.cost_price * x.quantity));
+
+                        }
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>Net Profit & Loss</td>
+                            <td>
+                                @Html.DisplayFor(modelItem => NetProfit)
+                            </td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

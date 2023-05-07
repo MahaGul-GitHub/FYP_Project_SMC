@@ -1,0 +1,56 @@
+﻿@model IEnumerable<SwissMetroCookware.Models.Category>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="page-header">
+    <div class="page-header-title">
+        <h4>Category</h4>
+    </div>
+</div>
+<div class="page-body">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Categories List</h5>
+                    <div class="card-header-right">
+                        <i class="icofont icofont-rounded-down"></i>
+                        <i class="icofont icofont-refresh"></i>
+                        <i class="icofont icofont-close-circled"></i>
+                    </div>
+                </div>
+                <div class="card-block">
+                    <table class="table table-bordered table-hover table-styling">
+                        <tr class="table-primary">
+                            <th>
+                                Category
+                            </th>
+                            <th>
+                            </th>
+                        </tr>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.name)
+                                </td>
+                                <td>
+                                    <a class="btn btn-primary btn-sm btn-outline" href="@Url.Action("Edit" , "Categories" , new {id = item.id})"><i class="icofont icofont-edit-alt"></i></a>
+                                    <a class="btn btn-primary btn-sm btn-outline" href="@Url.Action("Details" , "Categories" , new {id = item.id})"><i class="icofont icofont-info-circle"></i></a>
+                                    <a class="btn btn-primary btn-sm btn-outline" href="@Url.Action("Delete" , "Categories" , new {id = item.id})"><i class="icofont icofont-trash"></i></a>
+                                </td>
+                            </tr>
+                        }
+
+                    </table>
+
+                    <a class="btn btn-primary" href="@Url.Action("Create" , "Categories")">Add New Category</a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

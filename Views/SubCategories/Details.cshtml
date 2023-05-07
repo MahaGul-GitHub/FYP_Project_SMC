@@ -1,0 +1,64 @@
+﻿@model SwissMetroCookware.Models.SubCategory
+
+@{
+    ViewBag.Title = "Details";
+}
+
+
+<div class="page-header">
+    <div class="page-header-title">
+        <h4>Sub Category</h4>
+    </div>
+</div>
+<div class="page-body">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Details</h5>
+                    <div class="card-header-right">
+                        <i class="icofont icofont-rounded-down"></i>
+                        <i class="icofont icofont-refresh"></i>
+                        <i class="icofont icofont-close-circled"></i>
+                    </div>
+                </div>
+                <div class="card-block">
+                    <table class="table table-borderless">
+                        <tr>
+                            <td style="font-weight:bold;">
+                                Category:
+                            </td>
+                            <td>@Html.DisplayFor(model => model.Category.name)</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:bold;">
+                                ID:
+                            </td>
+                            <td>@Html.DisplayFor(model => model.id)</td>
+                        </tr>
+
+                        <tr>
+                            <td style="font-weight:bold;">
+                                Picture:
+                            </td>
+                            <td>@Url.Content(Model.picture)</td>
+                        </tr>
+
+                        <tr>
+                            <td style="font-weight:bold;">
+                                Sub Category:
+                            </td>
+                            <td>@Html.DisplayFor(model => model.name)</td>
+                        </tr>
+                    </table>
+
+                    <p>
+                        <a class="btn btn-primary" href="@Url.Action("Edit" , "SubCategories" , new {id = Model.id})">Edit</a>
+                        <a class="btn btn-primary" href="@Url.Action("Index" , "SubCategories")">Back</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

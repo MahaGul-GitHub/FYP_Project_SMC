@@ -1,0 +1,183 @@
+﻿@using SwissMetroCookware.Models
+
+@{
+    int row = 0;
+
+    int total_quantity = 0;
+    int total_bill = 0;
+    List<Product> list = (List<Product>
+    )Session["myCart"];
+    Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
+}
+<main class="main">
+    <div class="page-header breadcrumb-wrap">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="@Url.Action(" IndexCustomer" , "Home" )" rel="nofollow">Home</a>
+                <span></span> Shop
+                <span></span> Your Cart
+            </div>
+        </div>
+    </div>
+    <section class="mt-50 mb-50">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="table-responsive">
+                        <table class="table shopping-summery text-center clean">
+                            <thead>
+                                <tr class="main-heading">
+                                    <th scope="col">Image</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Subtotal</th>
+                                    <th scope="col">Remove</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (list != null)
+                                {
+                                    foreach (var item in list)
+                                    {
+                                        <tr>
+                                            <td class="image product-thumbnail"><img src="@Url.Content(item.picture)" width="130px" height="100px" alt="#"></td>
+                                            <td class="product-des product-name">
+                                                <h5 class="product-name"><a href="@Url.Action(" SingleProduct" , "Home" , new{ id=item.id})">@item.name</a></h5>
+                                                <p class="font-xs">
+                                                    @item.description
+                                                </p>
+                                            </td>
+                                            <td class="price" data-title="Price">
+                                                @{
+                                                    int price = 0;
+                                                    int percent = 0;
+                                                    int discount_price = 0;
+                                                    int new_price = 0;
+                                                    int sub_total = 0;
+
+                                                    price = Convert.ToInt32(item.sale_price);
+                                                }
+                                                @if (item.sale_percent != "0" && item.sale_percent != null)
+                                                {
+                                                    percent = Convert.ToInt32(item.sale_percent);
+                                                    discount_price = (price * percent) / 100;
+                                                    new_price = price - discount_price;
+                                                    <span>Rs. @new_price</span>
+                                                }
+                                                else
+                                                {
+                                                    <span>Rs. @price</span>
+                                                }
+                                            </td>
+                                            <td class="text-center" data-title="Stock">
+                                                <div>
+                                                    <a href="@Url.Action("PlusToCart", "Home" , new { RowNo=row })"><i class="fi-rs-plus-small"></i></a>
+                                                    <span>@item.quan</span>
+
+                                                    <a href="@Url.Action("MinusFromCart", "Home" , new { RowNo=row })"><i class="fi-rs-minus-small"></i></a>
+
+                                                </div>
+
+                                            </td>
+                                            <td class="text-right" data-title="Cart">
+                                                @if (item.sale_percent != "0" && item.sale_percent != null)
+                                                {
+                                                    sub_total = new_price * item.quan;
+
+                                                }
+                                                else
+                                                {
+
+                                                    sub_total = price * item.quan;
+                                                }
+
+                                                <span>Rs. @sub_total</span>
+                                            </td>
+                                            <td class="action" data-title="Remove"><a href="@Url.Action("RemoveFromCart", "Home" , new { RowNo=row })" class="text-muted"><i class="fi-rs-trash"></i></a></td>
+                                        </tr>
+
+                                        row++;
+                                        total_quantity += item.quan;
+                                        total_bill = total_bill+sub_total;
+                                    }
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td><b>@total_quantity</b></td>
+                                        <td><b>Rs. @total_bill</b></td>
+                                        <td></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td colspan="6" class="text-end">
+                                            <a href="@Url.Action("ClearCart" , "Home")" class="text-muted"> <i class="fi-rs-cross-small"></i> Clear Cart</a>
+                                        </td>
+                                    </tr>
+                                }
+                                @if (Session["myCart"] == null || row == 0)
+                                {
+                                    
+                                    <tr>
+                                        <td height="100px" colspan="6" rowspan="6"><h4>Your Shopping Cart Is Empty!</h4></td>
+                                    </tr>
+
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="cart-action text-end">
+                        <a class="btn " href="@Url.Action("Shop" , "Home" )"><i class="fi-rs-shopping-bag mr-10"></i>Continue Shopping</a>
+                    </div>
+                    <div class="divider center_icon mt-50 mb-50"><i class="fi-rs-fingerprint"></i></div>
+                    <div class="row mb-50">
+                        
+                        <div class="col-lg-6 col-md-12">
+                            <div class="border p-md-4 p-30 border-radius cart-totals">
+                                <div class="heading_s1 mb-3">
+                                    <h4>Cart Totals</h4>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <td class="cart_total_label">Cart Subtotal</td>
+                                                <td class="cart_total_amount"><span class="font-lg fw-900 text-brand">@total_bill</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="cart_total_label">Shipping</td>
+                                                <td class="cart_total_amount"> <i class="ti-gift mr-5"></i>Calculated at next step</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="cart_total_label">Total</td>
+                                                <td class="cart_total_amount"><strong><span class="font-xl fw-900 text-brand">Rs. @total_bill</span></strong></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                @if (Session["myCart"] == null || row == 0)
+                                {
+                                
+                                    <a href="#" class="btn btn-disabled "> <i class="fi-rs-box-alt mr-10"></i> Proceed To CheckOut</a>
+
+                                }
+                                else
+                                { 
+                                    <a href="@Url.Action("Checkout", "Home" , new { total = Convert.ToInt32(total_bill)})" class="btn"> <i class="fi-rs-box-alt mr-10"></i> Proceed To CheckOut</a>
+
+                                }
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+
+@*<script type="text/javascript">
+    window.onload = function () { window.scrollBy(0, 240); }
+
+</script>*@

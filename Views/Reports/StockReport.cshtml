@@ -1,0 +1,73 @@
+﻿@model IEnumerable<SwissMetroCookware.Models.Product>
+@{
+    ViewBag.Title = "Stock Report";
+    int count = 1;
+}
+
+<div class="page-header">
+    <div class="page-header-title">
+        <h4>Report</h4>
+    </div>
+</div>
+<div class="page-body">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Stock Report</h5>
+                    <div class="card-header-right">
+                        <i class="icofont icofont-rounded-down"></i>
+                        <i class="icofont icofont-refresh"></i>
+                        <i class="icofont icofont-close-circled"></i>
+                    </div>
+                </div>
+                <div class="card-block">
+                    <center>
+                        <h4>Daily Stock Report</h4>
+                        <span>@System.DateTime.Today.ToLongDateString()</span>
+                    </center>
+                    <hr />
+
+                    <table class="table table-bordered table-hover table-styling">
+                        <tr class="table-primary">
+                            <th width="120px">
+                                Picture
+                            </th>
+                            <th>
+                                Product
+                            </th>
+                            <th>
+                                Available Stock
+                            </th>
+
+                        </tr>
+
+                        @foreach (var p in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <img height="100px" width="100px" src="@Url.Content(p.picture)" />
+                                </td>
+                                <td>
+                                    <span>
+                                        @Html.DisplayFor(modelItem => p.name)
+                                    </span>
+                                    <p>@p.description</p>
+                                </td>
+                                <td>
+                                    @p.quantity
+                                </td>
+
+
+                            </tr>
+                        }
+
+                    </table>
+
+
+                </div>
+                </div>
+        </div>
+    </div>
+</div>
+

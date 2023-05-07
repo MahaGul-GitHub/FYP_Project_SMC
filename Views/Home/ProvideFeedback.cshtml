@@ -1,0 +1,109 @@
+﻿@using SwissMetroCookware.Models
+@model SwissMetroCookware.Models.Feedback
+@{
+    Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
+    OrderDetail od = ViewBag.od;
+}
+
+<main class="main">
+    <div class="page-header breadcrumb-wrap">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="@Url.Action("IndexCustomer" , "Home")" rel="nofollow">Home</a>
+                <span></span> MyAccount
+                <span></span> Feedback
+            </div>
+        </div>
+    </div>
+
+    <section class="mt-50 mb-50">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-6">
+                    <div class="order_review">
+                        <div class="mb-20">
+                            <h4>Product Details</h4>
+                        </div>
+                        <div class="table-responsive order_table text-center">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th colspan="2">Product</th>
+                                        <th>Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr>
+                                        <td class="image product-thumbnail"><img src="@Url.Content(od.Product.picture)" height="100px" width="100px" alt="#"></td>
+                                        <td>
+                                            <h5><a href="@Url.Action("SingleProduct", "Home", new { id = od.product_fid })">@od.Product.name</a></h5> <span class="product-qty">x @od.quantity</span>
+                                        </td>
+                                        <td>
+                                            <span>Rs. @Convert.ToInt32(od.sale_price)</span>
+
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-6">
+                    <div class="mb-20">
+                        <h4>Your Feedback</h4>
+                    </div>
+
+                    @using (Html.BeginForm("Create" , "Feedbacks" , FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="form-group">
+                        Rating
+                        <div class="col-md-10">
+                            <select name="rating" class="form-control">
+                                <option value="1" selected>&#128516 Great</option>
+                                <option value="2">&#128578 Satisfactory</option>
+                                <option value="3">&#128528 Neutral</option>
+                                <option value="4">&#128577 Poor</option>
+                                <option value="5">&#128546 Very Poor</option>
+                            </select>
+                            @Html.ValidationMessageFor(model => model.rating, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        Message
+                        <div class="col-md-10">
+                            <input type="text" name="feedback1" class="form-control">
+                            @Html.ValidationMessageFor(model => model.feedback1, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <input type="text" name="customer_fid" value="@od.Order.customer_fid" hidden />
+                    <input type="text" name="product_fid" value="@od.product_fid" hidden />
+                     <input type="text" name="od_fid" value="@od.id" hidden />
+
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Submit Review" class="btn btn-fill-out btn-block mt-30" />
+                        </div>
+                    </div>
+                </div>
+                    }
+                </div>
+            </div>
+
+        </div>
+    </section>
+</main>

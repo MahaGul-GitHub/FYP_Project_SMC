@@ -1,0 +1,76 @@
+﻿@model SwissMetroCookware.Models.Feedback
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="page-header">
+    <div class="page-header-title">
+        <h4>Feedback</h4>
+    </div>
+</div>
+<div class="page-body">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Delete</h5>
+                    <span>Are you sure you want to delete this feedback?</span>
+                    <div class="card-header-right">
+                        <i class="icofont icofont-rounded-down"></i>
+                        <i class="icofont icofont-refresh"></i>
+                        <i class="icofont icofont-close-circled"></i>
+                    </div>
+                </div>
+                <div class="card-block">
+
+                    <dl class="dl-horizontal">
+                        <dt>
+                            Customer
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Customer.name)
+                        </dd>
+
+
+                        <dt>
+                            Product
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Product.name)
+                        </dd>
+
+                        <dt>
+                            Feedback
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.feedback1)
+                        </dd>
+
+                        <dt>
+                            Rating
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.rating)
+                        </dd>
+
+                    </dl>
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-actions no-color">
+                            <input type="submit" value="Delete" class="btn btn-danger" />
+                            <a class="btn btn-primary" href="@Url.Action("Index" , "Feedbacks")">Back</a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

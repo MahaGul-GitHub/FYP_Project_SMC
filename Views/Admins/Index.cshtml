@@ -1,0 +1,65 @@
+﻿@model IEnumerable<SwissMetroCookware.Models.Admin>
+
+@{
+    Layout = "~/Views/Shared/_LayoutManager.cshtml";
+
+    ViewBag.Title = "Index";
+}
+
+<div class="page-header">
+    <div class="page-header-title">
+        <h4>Admin</h4>
+    </div>
+</div>
+<div class="page-body">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Admins List</h5>
+                    <div class="card-header-right">
+                        <i class="icofont icofont-rounded-down"></i>
+                        <i class="icofont icofont-refresh"></i>
+                        <i class="icofont icofont-close-circled"></i>
+                    </div>
+                </div>
+                <div class="card-block">
+                    <table class="table table-bordered table-hover table-styling">
+                        <tr class="table-primary">
+                            <th>
+                                Name
+                            </th>
+                            <th>
+                                Email Address
+                            </th>
+                            <th>
+                            </th>
+                        </tr>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Employee.name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.email)
+                                </td>
+                                
+                                <td>
+                                    <a class="btn btn-primary btn-sm btn-outline" href="@Url.Action("Edit" , "Admins" , new {id = item.id})"><i class="icofont icofont-edit-alt"></i></a>
+                                    <a class="btn btn-primary btn-sm btn-outline" href="@Url.Action("Details" , "Admins" , new {id = item.id})"><i class="icofont icofont-info-circle"></i></a>
+                                    <a class="btn btn-primary btn-sm btn-outline" href="@Url.Action("Delete" , "Admins" , new {id = item.id})"><i class="icofont icofont-trash"></i></a>
+                                </td>
+                            </tr>
+                        }
+
+                    </table>
+
+                    <a class="btn btn-primary" href="@Url.Action("Create" , "Admins")">Add New </a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,100 @@
+﻿@using SwissMetroCookware.Models
+@{
+    Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
+    List<Wishlist> list= ViewBag.wishlist;
+   
+}
+
+<main class="main">
+    <div class="page-header breadcrumb-wrap">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="@Url.Action("IndexCustomer" , "Home")" rel="nofollow">Home</a>
+                <span></span> Shop
+                <span></span> Wishlist
+            </div>
+        </div>
+    </div>
+    <section class="mt-50 mb-50">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="table-responsive">
+                        <table class="table shopping-summery text-center">
+                            <thead>
+                                <tr class="main-heading">
+                                    <th scope="col" colspan="2">Product</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Stock Status</th>
+                                    <th scope="col">Action</th>
+                                    <th scope="col">Remove</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (list != null)
+                                {
+                                    foreach (var item in list)
+                                    {
+                                        <tr>
+                                            <td class="image product-thumbnail"><img src="@Url.Content(item.Product.picture)" height="150px" width="150px" alt="#"></td>
+                                            <td class="product-des product-name">
+                                                <h5 class="product-name"><a href="@Url.Action("SingleProduct", "Home", new { id = item.Product.id })">@item.Product.name</a></h5>
+                                                <p class="font-xs">
+                                                    @item.Product.description
+                                                </p>
+                                            </td>
+                                            <td class="price" data-title="Price">
+                                                <span>
+                                                    @{
+                                                        int price = 0;
+                                                        int percent = 0;
+                                                        int discount_price = 0;
+                                                        int new_price = 0;
+
+                                                        price = Convert.ToInt32(item.Product.sale_price);
+                                                    }
+                                                    @if (item.Product.sale_percent != "0" && item.Product.sale_percent != null)
+                                                    {
+                                                        percent = Convert.ToInt32(item.Product.sale_percent);
+                                                        discount_price = (price * percent) / 100;
+                                                        new_price = price - discount_price;
+                                                        <span>Rs. @new_price</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span>Rs. @price</span>
+                                                    }
+                                                </span>
+                                            </td>
+                                            <td class="text-center" data-title="Stock">
+                                                <span class="color3 font-weight-bold">In Stock</span>
+                                            </td>
+                                            <td class="text-right" data-title="Cart">
+                                                <a class="btn btn-sm" href="@Url.Action("AddToCart", "Home", new { id = item.Product.id })"><i class="fi-rs-shopping-bag mr-5"></i>Add to cart</a>
+                                            </td>
+                                            <td class="action" data-title="Remove"><a href="@Url.Action("DeleteFromWishlist", "Home",new { id = item.Product.id })"><i class="fi-rs-trash"></i></a></td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr><td colspan="5"></td></tr>
+                                    <tr><td colspan="5"></td></tr>
+                                    <tr>
+                                        <td colspan="5"><h4>Your wishlist is empty!</h4></td>
+                                    </tr>
+                                    <tr><td colspan="5"></td></tr>
+                                    <tr><td colspan="5"></td></tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="cart-action text-end">
+                        <a class="btn " href="@Url.Action("Shop" , "Home" )"><i class="fi-rs-shopping-bag mr-10"></i>View Products</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

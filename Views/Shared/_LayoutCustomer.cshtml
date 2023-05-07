@@ -1,0 +1,434 @@
+﻿@using SwissMetroCookware.Models
+
+@{
+    List<Product> cart_list;
+    cart_list = (List<Product>)Session["myCart"];
+    int price = 0;
+    int totall = 0;
+    int amount = 0;
+    Model1 db = new Model1();
+    Misc facebook = db.Miscs.Where(x => x.id == 3).FirstOrDefault();
+    Misc instagram = db.Miscs.Where(x => x.id == 2).FirstOrDefault();
+    Misc twitter = db.Miscs.Where(x => x.id == 4).FirstOrDefault();
+    Misc youtube = db.Miscs.Where(x => x.id == 1).FirstOrDefault();
+    Misc pinterest = db.Miscs.Where(x => x.id == 5).FirstOrDefault();
+
+}
+
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>@db.Companies.Select(x => x.name).FirstOrDefault()</title>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:title" content="">
+    <meta property="og:type" content="">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="~/CompanyPictures/20220620_225136_0000.png">
+    <!-- Template CSS -->
+    <link rel="stylesheet" href="~/Content/Customer/assets/css/maind6c3.css?v=3.3">
+</head>
+
+<body>
+    <!-- Quick view -->
+    <div class="modal fade custom-modal" id="quickViewModal" tabindex="-1" aria-labelledby="quickViewModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12 col-xs-12">
+
+                            <!-- End Gallery -->
+                            <div class="social-icons single-share">
+                                <ul class="text-grey-5 d-inline-block">
+                                    <li><strong class="mr-10">Share this:</strong></li>
+                                    <li class="social-facebook"><a href="#"><img src="~/Content/Customer/assets/imgs/theme/icons/icon-facebook.svg" alt=""></a></li>
+                                    <li class="social-twitter"> <a href="#"><img src="~/Content/Customer/assets/imgs/theme/icons/icon-twitter.svg" alt=""></a></li>
+                                    <li class="social-instagram"><a href="#"><img src="~/Content/Customer/assets/imgs/theme/icons/icon-instagram.svg" alt=""></a></li>
+                                    <li class="social-linkedin"><a href="#"><img src="~/Content/Customer/assets/imgs/theme/icons/icon-pinterest.svg" alt=""></a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <header class="header-area header-style-4 header-height-2">
+        <div class="header-top header-top-ptb-1 d-none d-lg-block">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-xl-3 col-lg-4">
+                        <div class="header-info">
+                            <ul>
+                                <li><i class="fi-rs-smartphone"></i> @db.Companies.Select(x => x.contact1).FirstOrDefault()</li>
+                                <li><i class="fi-rs-marker"></i><a href="@Url.Action("Contact" , "Home")">Our location</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-4">
+                        <div class="text-center">
+                            @*<div id="news-flash" class="d-inline-block">
+                                    <ul>
+                                        <li>Get great devices up to 50% off <a href="shop-grid-right.html">View details</a></li>
+                                        <li>Supper Value Deals - Save more with coupons</li>
+                                        <li>Trendy 25silver jewelry, save up 35% off today <a href="shop-grid-right.html">Shop now</a></li>
+                                    </ul>
+                                </div>*@
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4">
+                        <div class="header-info header-info-right">
+                            <ul>
+                                <li>
+                                    <a class="language-dropdown-active" href="#"> <i class="fi-rs-world"></i> English <i class="fi-rs-angle-small-down"></i></a>
+                                    @*<ul class="language-dropdown">
+                                            <li><a href="#"><img src="~/Content/Customer/assets/imgs/theme/flag-fr.png" alt="">Français</a></li>
+                                            <li><a href="#"><img src="~/Content/Customer/assets/imgs/theme/flag-dt.png" alt="">Deutsch</a></li>
+                                            <li><a href="#"><img src="~/Content/Customer/assets/imgs/theme/flag-ru.png" alt="">Pусский</a></li>
+                                        </ul>*@
+                                </li>
+                                <li><a href="@Url.Action("LoginAdmin" , "Home")"><i class="fi-rs-user"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="header-middle header-middle-ptb-1 d-none d-lg-block">
+            <div class="container">
+                <div class="header-wrap">
+                    <div class="logo logo-width-1">
+                        <a href="@Url.Action("IndexCustomer" , "Home")"><img src="~/CompanyPictures/20220620_225136_0000.png" alt="logo"></a>
+                    </div>
+                    <div class="header-right">
+
+                        <div class="header-right">
+                            <div class="search-style-2">
+
+                            </div>
+
+                            <div class="header-action-right">
+                                <div class="header-action-2">
+                                    <div class="header-action-icon-2">
+                                        <a href="@Url.Action("Wishlist" , "Home")">
+                                            <img class="svgInject" alt="Evara" src="~/Content/Customer/assets/imgs/theme/icons/icon-heart.svg">
+
+                                        </a>
+                                    </div>
+                                    @if (cart_list != null)
+                                    {
+                                        <div class="header-action-icon-2">
+                                            <a class="mini-cart-icon" href="@Url.Action("Cart", "Home")">
+                                                <img alt="Evara" src="~/Content/Customer/assets/imgs/theme/icons/icon-cart.svg">
+                                                <span class="pro-count blue">@cart_list.Count()</span>
+                                            </a>
+                                            <div class="cart-dropdown-wrap cart-dropdown-hm2">
+                                                <ul>
+                                                    @foreach (var item in cart_list)
+                                                    {
+                                                        <li>
+                                                            <div class="shopping-cart-img">
+                                                                <a href="@Url.Action("SingleProduct", "Home", new { id = item.id })"><img alt="Evara" src="@Url.Content(item.picture)" height="70px" width="90px"></a>
+                                                            </div>
+                                                            <div class="shopping-cart-title">
+                                                                <h4><a href="shop-product-right.html">@item.name</a></h4>
+                                                                <h4>
+                                                                    <span>@item.quan × </span>
+
+                                                                    @if (item.sale_percent != "0" && item.sale_percent != null)
+                                                                    {
+                                                                        int old_price = Convert.ToInt32(item.sale_price);
+                                                                        int s_percent = Convert.ToInt32(item.sale_percent);
+                                                                        int discount = (old_price * s_percent) / 100;
+                                                                        price = old_price - discount;
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        price = Convert.ToInt32(item.sale_price);
+                                                                    }
+                                                                    <span>Rs. @price</span>
+                                                                    @{totall = (item.quan * price);
+                                                                    }
+                                                                </h4>
+                                                            </div>
+                                                            @{amount = amount + totall;
+                                                            }
+                                                        </li>
+                                                    }
+                                                </ul>
+                                                <div class="shopping-cart-footer">
+                                                    <div class="shopping-cart-total">
+                                                        <h4>Total <span>Rs. @amount</span></h4>
+                                                    </div>
+                                                    <div class="shopping-cart-button">
+                                                        <a href="@Url.Action("Cart", "Home")" class="outline">View cart</a>
+                                                        <a href="@Url.Action("Checkout", "Home" , new { total = totall})">Checkout</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="header-action-icon-2">
+                                            <a class="mini-cart-icon" href="@Url.Action("Cart", "Home")">
+                                                <img alt="Evara" src="~/Content/Customer/assets/imgs/theme/icons/icon-cart.svg">
+                                                <span class="pro-count blue">0</span>
+                                            </a>
+                                            <div class="cart-dropdown-wrap cart-dropdown-hm2">
+
+                                                <h3>Your cart is empty!</h3>
+
+                                                <div class="shopping-cart-footer">
+                                                    <div class="shopping-cart-total">
+                                                        <h4>Total <span>Rs. 0</span></h4>
+                                                    </div>
+                                                    <div class="shopping-cart-button">
+                                                        <a href="@Url.Action("Cart", "Home")" class="outline">Go to cart</a>
+                                                        <a href="@Url.Action("Shop", "Home")">Shop</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+
+            <div class="header-bottom header-bottom-bg-color sticky-bar">
+                <div class="container">
+                    <div class="header-wrap header-space-between position-relative">
+                        <div class="logo logo-width-1 d-block d-lg-none">
+                            <a href="@Url.Action("IndexCustomer" , "Home")"><img src="@Url.Content(db.Companies.Select(x=>x.logo).FirstOrDefault())" alt="logo"></a>
+                        </div>
+                        <div class="header-nav d-none d-lg-flex">
+                            <div class="main-categori-wrap d-none d-lg-block">
+                                <a href="@Url.Action("Shop" , "Home")">
+                                    <span class="fi-rs-apps"></span> Shop Now!
+                                </a>
+
+                            </div>
+                            <div class="main-menu main-menu-padding-1 main-menu-lh-2 d-none d-lg-block">
+                                <nav>
+                                    <ul>
+                                        <li>
+                                            <a class="active" href="@Url.Action("IndexCustomer" , "Home")">Home</a>
+
+                                        </li>
+                                        <li>
+                                            <a href="@Url.Action("About" , "Home")">About</a>
+                                        </li>
+
+                                        @if (Session["Customer"] != null)
+                                        {
+                                            Customer c = (Customer)Session["Customer"];
+                                            <li>
+                                                <a href="@Url.Action("MyAccount", "Home", new { id = c.id })">My Account<i class="fi-rs-angle-down"></i></a>
+                                                <ul class="sub-menu">
+                                                    <li><a href="@Url.Action("Logout", "Customers")">Logout</a></li>
+
+                                                </ul>
+                                            </li>
+                                        }
+                                        else
+                                        {
+                                            <li>
+                                                <a href="@Url.Action("LoginCustomer" , "Customers")">Login / SignUp</a>
+                                            </li>
+                                        }
+                                        <li>
+                                            <a href="@Url.Action("Contact" , "Home")">Contact</a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                        <div class="hotline d-none d-lg-block">
+                            <p><i class="fi-rs-headset"></i><span>Helpline: @db.Companies.Select(x => x.contact2).FirstOrDefault()</span></p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    @RenderBody()
+
+    <footer class="main">
+
+        <section class="newsletter p-30 text-white wow fadeIn animated animated" style="visibility: visible;">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-7 mb-md-3 mb-lg-0">
+                        <div class="row align-items-center">
+                            <div class="col flex-horizontal-center">
+                                <img class="icon-email" src="assets/imgs/theme/icons/icon-email.svg" alt="">
+                                <h4 class="font-size-20 mb-0 ml-3">Sign up to Newsletter</h4>
+                            </div>
+                            <div class="col my-4 my-md-0 des">
+                                <h5 class="font-size-15 ml-4 mb-0">...and receive <strong>exciting news and updates!</strong></h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <!-- Subscribe Form -->
+
+                                <a class="btn bg-dark text-white" href="@Url.Action("Subscribe" , "Home")">Subscribe Now!</a>
+
+
+                        <!-- End Subscribe Form -->
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section-padding footer-mid">
+            <div class="container pt-15 pb-20">
+                <div class="row">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="widget-about font-md mb-md-5 mb-lg-0">
+                            <div class="logo logo-width-1 wow fadeIn animated">
+                                <a href="index.html"><img src="~/Content/Customer/assets/imgs/theme/logo.svg" alt="logo"></a>
+                            </div>
+                            <h5 class="mt-20 mb-10 fw-600 text-grey-4 wow fadeIn animated">Contact</h5>
+                            <p class="wow fadeIn animated">
+                                <strong>Address:</strong>
+                                @db.Companies.Select(x => x.address).FirstOrDefault()
+                            </p>
+                            <p class="wow fadeIn animated">
+                                <strong>Phone: @db.Companies.Select(x => x.contact1).FirstOrDefault()</strong>
+                            </p>
+                            <p class="wow fadeIn animated">
+                                <strong>Fax: @db.Companies.Select(x => x.contact2).FirstOrDefault()</strong>
+                            </p>
+                            <h5 class="mb-10 mt-30 fw-600 text-grey-4 wow fadeIn animated">Follow Us</h5>
+                            <div class="mobile-social-icon wow fadeIn animated mb-sm-5 mb-md-0">
+                                <a href="@facebook.description"><img src="~/Content/Customer/assets/imgs/theme/icons/icon-facebook.svg" alt=""></a>
+                                <a href="@twitter.description"><img src="~/Content/Customer/assets/imgs/theme/icons/icon-twitter.svg" alt=""></a>
+                                <a href="@instagram.description"><img src="~/Content/Customer/assets/imgs/theme/icons/icon-instagram.svg" alt=""></a>
+                                <a href="@pinterest.description"><img src="~/Content/Customer/assets/imgs/theme/icons/icon-pinterest.svg" alt=""></a>
+                                <a href="@youtube.description"><img src="~/Content/Customer/assets/imgs/theme/icons/icon-youtube.svg" alt=""></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-3">
+                        <h5 class="widget-title wow fadeIn animated">About</h5>
+                        <ul class="footer-list wow fadeIn animated mb-sm-5 mb-md-0">
+                            <li><a href="@Url.Action("About" , "Home")">About Us</a></li>
+                            <li><a href="@Url.Action("PrivacyPolicy" , "Home")">Privacy Policy</a></li>
+                            <li><a href="@Url.Action("Guide" , "Home")">Purchase Guide</a></li>
+                            <li><a href="@Url.Action("Terms" , "Home")">Terms &amp; Conditions</a></li>
+                            <li><a href="@Url.Action("Contact" , "Home")">Contact Us</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-2  col-md-3">
+                        <h5 class="widget-title wow fadeIn animated">My Account</h5>
+                        <ul class="footer-list wow fadeIn animated">
+                            @if (Session["Customer"] != null)
+                            {
+
+                                <li><a href="@Url.Action("Wishlist", "Home")">My Wishlist</a></li>
+                                <li><a href="@Url.Action("MyOrders", "Home")">My Orders</a></li>
+                                <li><a href="@Url.Action("MyCancellations", "Home")">My Cancellations</a></li>
+                                <li><a href="@Url.Action("Cart", "Home")">View Cart</a></li>
+                            }
+                            else
+                            {
+                                <li><a href="@Url.Action("LoginCustomer", "Customers")">Sign In</a></li>
+                                <li><a href="@Url.Action("LoginCustomer", "Customers")">Sign Up</a></li>
+                                <li><a href="@Url.Action("Cart", "Home")">View Cart</a></li>
+                            }
+                        </ul>
+                    </div>
+                    <!--<div class="col-lg-4">
+                        <h5 class="widget-title wow fadeIn animated">Install App</h5>
+                        <div class="row">
+                            <div class="col-md-8 col-lg-12">
+                                <p class="wow fadeIn animated">From App Store or Google Play</p>
+                                <div class="download-app wow fadeIn animated">
+                                    <a href="#" class="hover-up mb-sm-4 mb-lg-0"><img class="active" src="~/Content/Customer/assets/imgs/theme/app-store.jpg" alt=""></a>
+                                    <a href="#" class="hover-up"><img src="~/Content/Customer/assets/imgs/theme/google-play.jpg" alt=""></a>
+                                </div>
+                            </div>-->
+                    @*<div class="col-md-4 col-lg-12 mt-md-3 mt-lg-0">
+                            <p class="mb-20 wow fadeIn animated">Secured Payment Gateways</p>
+                            <img class="wow fadeIn animated" src="~/Content/Customer/assets/imgs/theme/payment-method.png" alt="">
+                        </div>*@
+                    <!--</div>
+                    </div>-->
+                </div>
+            </div>
+        </section>
+        <div class="container pb-20 wow fadeIn animated">
+            <div class="row">
+                <div class="col-12 mb-20">
+                    <div class="footer-bottom"></div>
+                </div>
+                <div class="col-lg-6">
+                    <p class="float-md-left font-sm text-muted mb-0">&copy; 2022, <strong class="text-brand"> SMC </strong>@db.Companies.Select(x => x.name).FirstOrDefault()</p>
+                </div>
+                <div class="col-lg-6">
+                    <p class="text-lg-end text-start font-sm text-muted mb-0">
+                        Designed by <a href="https://pugc.edu.pk/website/" target="_blank">University of Punjab</a>. All rights reserved
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Preloader Start -->
+    <div id="preloader-active">
+        <div class="preloader d-flex align-items-center justify-content-center">
+            <div class="preloader-inner position-relative">
+                <div class="text-center">
+                    <h5 class="mb-5">@db.Companies.Select(x => x.name).FirstOrDefault()</h5>
+                    <div class="loader">
+                        <div class="bar bar1"></div>
+                        <div class="bar bar2"></div>
+                        <div class="bar bar3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Vendor JS-->
+    <script src="~/Content/Customer/assets/js/vendor/modernizr-3.6.0.min.js"></script>
+    <script src="~/Content/Customer/assets/js/vendor/jquery-3.6.0.min.js"></script>
+    <script src="~/Content/Customer/assets/js/vendor/jquery-migrate-3.3.0.min.js"></script>
+    <script src="~/Content/Customer/assets/js/vendor/bootstrap.bundle.min.js"></script>
+    <script src="~/Content/Customer/assets/js/plugins/slick.js"></script>
+    <script src="~/Content/Customer/assets/js/plugins/jquery.syotimer.min.js"></script>
+    <script src="~/Content/Customer/assets/js/plugins/wow.js"></script>
+    <script src="~/Content/Customer/assets/js/plugins/jquery-ui.js"></script>
+    <script src="~/Content/Customer/assets/js/plugins/perfect-scrollbar.js"></script>
+    <script src="~/Content/Customer/assets/js/plugins/magnific-popup.js"></script>
+    <script src="~/Content/Customer/assets/js/plugins/select2.min.js"></script>
+    <script src="~/Content/Customer/assets/js/plugins/waypoints.js"></script>
+    <script src="~/Content/Customer/assets/js/plugins/counterup.js"></script>
+    <script src="~/Content/Customer/assets/js/plugins/jquery.countdown.min.js"></script>
+    <script src="~/Content/Customer/assets/js/plugins/images-loaded.js"></script>
+    <script src="~/Content/Customer/assets/js/plugins/isotope.js"></script>
+    <script src="~/Content/Customer/assets/js/plugins/scrollup.js"></script>
+    <script src="~/Content/Customer/assets/js/plugins/jquery.vticker-min.js"></script>
+    <script src="~/Content/Customer/assets/js/plugins/jquery.theia.sticky.js"></script>
+    <script src="~/Content/Customer/assets/js/plugins/jquery.elevatezoom.js"></script>
+    <!-- Template  JS -->
+    <script src="~/Content/Customer/assets/js/maind6c3.js?v=3.3"></script>
+    <script src="~/Content/Customer/assets/js/shopd6c3.js?v=3.3"></script>
+</body>
+
+</html>

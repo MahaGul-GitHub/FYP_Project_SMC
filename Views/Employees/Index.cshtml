@@ -1,0 +1,88 @@
+﻿@model IEnumerable<SwissMetroCookware.Models.Employee>
+
+@{
+    Layout = "~/Views/Shared/_LayoutManager.cshtml";
+
+    ViewBag.Title = "Index";
+}
+
+<div class="page-header">
+    <div class="page-header-title">
+        <h4>Employees</h4>
+    </div>
+</div>
+<div class="page-body">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Employees List</h5>
+                    <div class="card-header-right">
+                        <i class="icofont icofont-rounded-down"></i>
+                        <i class="icofont icofont-refresh"></i>
+                        <i class="icofont icofont-close-circled"></i>
+                    </div>
+                </div>
+                <div class="card-block">
+                    <table class="table table-bordered table-hover table-styling">
+                        <tr class="table-primary">
+                            <th>
+                                Name
+                            </th>
+                            <th>
+                                Email Address
+                            </th>
+                            <th>
+                                Phone Number
+                            </th>
+                            <th>
+                                Picture
+                            </th>
+                            <th>
+                                Designation
+                            </th>
+                            <th>
+                            </th>
+                        </tr>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.email)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.contact)
+                                </td>
+                                <td>
+                                    <img height="100px" width="150px" src="@Url.Content(item.picture)" />
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.designation)
+                                </td>
+                                <td>
+                                    <a class="btn btn-primary btn-sm btn-outline" href="@Url.Action("Edit" , "Employees" , new {id = item.id})"><i class="icofont icofont-edit-alt"></i></a>
+                                    <a class="btn btn-primary btn-sm btn-outline" href="@Url.Action("Details" , "Employees" , new {id = item.id})"><i class="icofont icofont-info-circle"></i></a>
+                                    <a class="btn btn-primary btn-sm btn-outline" href="@Url.Action("Delete" , "Employees" , new {id = item.id})"><i class="icofont icofont-trash"></i></a>
+                                    @*@Html.ActionLink("Edit", "Employees", new { id = item.id }) |
+                                    @Html.ActionLink("Details", "Employees", new { id = item.id }) |
+                                    @Html.ActionLink("Delete", "Employees", new { id = item.id })*@
+                                </td>
+                            </tr>
+                        }
+
+                    </table>
+
+                    <a class="btn btn-primary" href="@Url.Action("Create" , "Employees")">Add New Employee</a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

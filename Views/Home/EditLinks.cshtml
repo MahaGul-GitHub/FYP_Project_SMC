@@ -1,0 +1,300 @@
+﻿@using SwissMetroCookware.Models
+@{
+    Model1 db = new Model1();
+    Misc facebook = db.Miscs.Where(x => x.id == 3).FirstOrDefault();
+    Misc instagram = db.Miscs.Where(x => x.id == 2).FirstOrDefault();
+    Misc twitter = db.Miscs.Where(x => x.id == 4).FirstOrDefault();
+    Misc youtube = db.Miscs.Where(x => x.id == 1).FirstOrDefault();
+    Misc pinterest = db.Miscs.Where(x => x.id == 5).FirstOrDefault();
+    Misc map = db.Miscs.Where(x => x.id == 6).FirstOrDefault();
+    Misc calendar = db.Miscs.Where(x => x.id == 7).FirstOrDefault();
+    Misc linkedin = db.Miscs.Where(x => x.id == 9).FirstOrDefault();
+    Misc googleplus = db.Miscs.Where(x => x.id == 8).FirstOrDefault();
+
+}
+
+
+<div class="page-header">
+    <div class="page-header-title">
+        <h4>Employees</h4>
+    </div>
+</div>
+<div class="page-body">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Edit Links</h5>
+                    <div class="card-header-right">
+                        <i class="icofont icofont-rounded-down"></i>
+                        <i class="icofont icofont-refresh"></i>
+                        <i class="icofont icofont-close-circled"></i>
+                    </div>
+                </div>
+                <div class="card-block">
+
+
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>Name</th>
+                            <th>Link</th>
+                            <th>Action</th>
+                        </tr>
+                        <tr>
+                            @using (Html.BeginForm("EditLinks", "Home"))
+                            {
+                                @Html.AntiForgeryToken()
+
+
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                <td>
+                                    Facebook:
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <input type="text" name="description" value="@facebook.description" class="form-control" />
+                                        @Html.ValidationMessageFor(model => facebook.description, "", new { @class = "text-danger" })
+                                    </div>
+                                    <input type="text" name="name" value="@facebook.name" hidden />
+                                    <input type="text" name="id" value="@facebook.id" hidden />
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-10">
+                                            <input type="submit" value="Save" class="btn btn-primary" />
+                                        </div>
+                                    </div>
+                                </td>
+
+                            }
+                        </tr>
+                        <tr>
+                            @using (Html.BeginForm("EditLinks", "Home"))
+                            {
+                                @Html.AntiForgeryToken()
+
+
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                <td>
+                                    Instagram:
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <input type="text" name="description" value="@instagram.description" class="form-control" />
+                                        @Html.ValidationMessageFor(model => instagram.description, "", new { @class = "text-danger" })
+                                    </div>
+                                    <input type="text" name="name" value="@instagram.name" hidden />
+                                    <input type="text" name="id" value="@instagram.id" hidden />
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-10">
+                                            <input type="submit" value="Save" class="btn btn-primary" />
+                                        </div>
+                                    </div>
+                                </td>
+
+                            }
+                        </tr>
+                        <tr>
+                            @using (Html.BeginForm("EditLinks", "Home"))
+                            {
+                                @Html.AntiForgeryToken()
+
+
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                <td>
+                                    Twitter:
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <input type="text" name="description" value="@twitter.description" class="form-control" />
+                                        @Html.ValidationMessageFor(model => twitter.description, "", new { @class = "text-danger" })
+                                    </div>
+                                    <input type="text" name="name" value="@twitter.name" hidden />
+                                    <input type="text" name="id" value="@twitter.id" hidden />
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-10">
+                                            <input type="submit" value="Save" class="btn btn-primary" />
+                                        </div>
+                                    </div>
+                                </td>
+
+                            }
+                        </tr>
+                        <tr>
+                            @using (Html.BeginForm("EditLinks", "Home"))
+                            {
+                                @Html.AntiForgeryToken()
+
+
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                <td>
+                                    Pinterest:
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <input type="text" name="description" value="@pinterest.description" class="form-control" />
+                                        @Html.ValidationMessageFor(model => pinterest.description, "", new { @class = "text-danger" })
+                                    </div>
+                                    <input type="text" name="name" value="@pinterest.name" hidden />
+                                    <input type="text" name="id" value="@pinterest.id" hidden />
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-10">
+                                            <input type="submit" value="Save" class="btn btn-primary" />
+                                        </div>
+                                    </div>
+                                </td>
+
+                            }
+                        </tr>
+                        <tr>
+                            @using (Html.BeginForm("EditLinks", "Home"))
+                            {
+                                @Html.AntiForgeryToken()
+
+
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                <td>
+                                    Instagram:
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <input type="text" name="description" value="@instagram.description" class="form-control" />
+                                        @Html.ValidationMessageFor(model => instagram.description, "", new { @class = "text-danger" })
+                                    </div>
+                                    <input type="text" name="name" value="@instagram.name" hidden />
+                                    <input type="text" name="id" value="@instagram.id" hidden />
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-10">
+                                            <input type="submit" value="Save" class="btn btn-primary" />
+                                        </div>
+                                    </div>
+                                </td>
+
+                            }
+                        </tr>
+                        <tr>
+                            @using (Html.BeginForm("EditLinks", "Home"))
+                            {
+                                @Html.AntiForgeryToken()
+
+
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                <td>
+                                    Location:
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <input type="text" name="description" value="@map.description" class="form-control" />
+                                        @Html.ValidationMessageFor(model => map.description, "", new { @class = "text-danger" })
+                                    </div>
+                                    <input type="text" name="name" value="@map.name" hidden />
+                                    <input type="text" name="id" value="@map.id" hidden />
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-10">
+                                            <input type="submit" value="Save" class="btn btn-primary" />
+                                        </div>
+                                    </div>
+                                </td>
+
+                            }
+                        </tr>
+                        <tr>
+                            @using (Html.BeginForm("EditLinks", "Home"))
+                            {
+                                @Html.AntiForgeryToken()
+
+
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                <td>
+                                    Instagram:
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <input type="text" name="description" value="@calendar.description" class="form-control" />
+                                        @Html.ValidationMessageFor(model => calendar.description, "", new { @class = "text-danger" })
+                                    </div>
+                                    <input type="text" name="name" value="@calendar.name" hidden />
+                                    <input type="text" name="id" value="@calendar.id" hidden />
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-10">
+                                            <input type="submit" value="Save" class="btn btn-primary" />
+                                        </div>
+                                    </div>
+                                </td>
+
+                            }
+                        </tr>
+                        <tr>
+                            @using (Html.BeginForm("EditLinks", "Home"))
+                            {
+                                @Html.AntiForgeryToken()
+
+
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                <td>
+                                    Google Plus:
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <input type="text" name="description" value="@googleplus.description" class="form-control" />
+                                        @Html.ValidationMessageFor(model => googleplus.description, "", new { @class = "text-danger" })
+                                    </div>
+                                    <input type="text" name="name" value="@googleplus.name" hidden />
+                                    <input type="text" name="id" value="@googleplus.id" hidden />
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-10">
+                                            <input type="submit" value="Save" class="btn btn-primary" />
+                                        </div>
+                                    </div>
+                                </td>
+
+                            }
+                        </tr>
+                        <tr>
+                            @using (Html.BeginForm("EditLinks", "Home"))
+                            {
+                                @Html.AntiForgeryToken()
+
+
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                <td>
+                                    LinkedIn:
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <input type="text" name="description" value="@linkedin.description" class="form-control" />
+                                        @Html.ValidationMessageFor(model => linkedin.description, "", new { @class = "text-danger" })
+                                    </div>
+                                    <input type="text" name="name" value="@linkedin.name" hidden />
+                                    <input type="text" name="id" value="@linkedin.id" hidden />
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-10">
+                                            <input type="submit" value="Save" class="btn btn-primary" />
+                                        </div>
+                                    </div>
+                                </td>
+
+                            }
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

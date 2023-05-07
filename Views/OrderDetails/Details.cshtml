@@ -1,0 +1,65 @@
+﻿@model SwissMetroCookware.Models.OrderDetail
+
+@{
+    ViewBag.Title = "Details";
+}
+
+
+
+<div class="page-header">
+    <div class="page-header-title">
+        <h4>Order Details</h4>
+    </div>
+</div>
+<div class="page-body">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Details</h5>
+                    <div class="card-header-right">
+                        <i class="icofont icofont-rounded-down"></i>
+                        <i class="icofont icofont-refresh"></i>
+                        <i class="icofont icofont-close-circled"></i>
+                    </div>
+                </div>
+                <div class="card-block">
+                    <table class="table table-borderless">
+                        <tr>
+                            <td style="font-weight:bold;">
+                                Product:
+                            </td>
+                            <td>@Html.DisplayFor(model => model.Product.name)</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:bold;">
+                                Quantity:
+                            </td>
+                            <td>@Html.DisplayFor(model => model.quantity)</td>
+                        </tr>
+
+                        <tr>
+                            <td style="font-weight:bold;">
+                                Feedback:
+                            </td>
+                            <td>@Html.DisplayFor(model => model.feedback_status)</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:bold;">
+                                Date:
+                            </td>
+                            <td>@Html.DisplayFor(model => model.Order.date)</td>
+                        </tr>
+
+                    </table>
+
+                    <p>
+                        <a class="btn btn-primary" href="@Url.Action("Edit" , "OrderDetails" , new {id = Model.id})">Edit</a>
+                        <a class="btn btn-primary" href="@Url.Action("Index" , "OrderDetails")">Back</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

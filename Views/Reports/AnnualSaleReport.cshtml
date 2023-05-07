@@ -1,0 +1,153 @@
+﻿@using SwissMetroCookware.Models
+@{
+    Layout = "~/Views/Shared/_LayoutManager.cshtml";
+
+    ViewBag.Title = "Sale Report";
+    int count = 1;
+    Model1 db = new Model1();
+    List<Order> o = ViewBag.orders;
+    List<OrderDetail> od = ViewBag.od;
+    List<Product> p = ViewBag.products;
+    int profit = 0;
+    int total_items = 0;
+    foreach (var item in o)
+    {
+        profit = profit + Convert.ToInt32(item.amount);
+
+
+    }
+    foreach (var item in od)
+    {
+        total_items += item.quantity;
+    }
+    int year = ViewBag.year;
+}
+
+<div class="page-header">
+    <div class="page-header-title">
+        <h4>Report</h4>
+    </div>
+</div>
+<div class="page-body">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-header-right">
+                        <i class="icofont icofont-rounded-down"></i>
+                        <i class="icofont icofont-refresh"></i>
+                        <i class="icofont icofont-close-circled"></i>
+                    </div>
+                </div>
+                <div class="card-block">
+                    <center>
+                        <h4>Annual Sales Report</h4>
+                        <span>@year</span>
+                    </center>
+                    <hr />
+                    <div class="row invoice-contact">
+                        <div class="col-md-12">
+                            <div class="invoice-box row">
+                                <div class="col-sm-6">
+                                    <table class="table table-responsive invoice-table table-borderless">
+                                        <tbody>
+                                            <tr>
+                                                <td>@db.Companies.Select(x => x.name).FirstOrDefault()</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    @db.Companies.Select(x => x.email).FirstOrDefault()
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>@db.Companies.Select(x => x.contact1).FirstOrDefault()</td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <hr />
+                    <div class="row invoive-info">
+                        <div class="col-md-4 col-xs-12 invoice-client-info">
+                            <h6>Total Orders:</h6>
+                            <span>@o.Count()</span>
+                        </div>
+                        <div class="col-md-4 col-sm-6">
+                            <h6>Net Sales:</h6>
+                            <span>Rs. @profit</span>
+                        </div>
+                        <div class="col-md-4 col-sm-6">
+                            <h6 class="m-b-20">Items Sold:</h6>
+                            <span>@total_items</span>
+                        </div>
+                    </div>
+                    <hr />
+                    <table class="table table-bordered table-hover table-styling">
+                        <tr class="table-primary">
+                            <th>
+                                Sr #
+                            </th>
+                            <th width="120px">
+                                Product
+                            </th>
+                            <th>
+                                Name
+                            </th>
+                            <th>
+                                Quantity Sold
+                            </th>
+
+                        </tr>
+
+                        @foreach (var item in p)
+                        {
+                            int p_count = 0;
+
+                            foreach (var i in od)
+                            {
+                                if (i.product_fid == item.id)
+                                {
+                                    p_count++;
+                                }
+                            }
+                            if (p_count != 0)
+                            {
+                                <tr>
+                                    <td>
+                                        @count
+                                    </td>
+                                    <td>
+                                        <img src="@Url.Content(item.picture)" height="100px" width="100px" />
+                                    </td>
+                                    <td>
+                                        <span>@item.name</span>
+                                    </td>
+                                    <td>
+                                        @p_count
+                                    </td>
+
+                                </tr>
+
+                                count++;
+                            }
+                        }
+
+                    </table>
+                    <button onclick="printFunction()" class="btn btn-fill-out btn-block mt-30">Print</button>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+      function printFunction() {
+        window.print();
+      }
+</script>

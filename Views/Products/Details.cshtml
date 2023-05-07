@@ -1,0 +1,94 @@
+﻿@model SwissMetroCookware.Models.Product
+
+@{
+    ViewBag.Title = "Details";
+}
+
+
+<div class="page-header">
+    <div class="page-header-title">
+        <h4>Product</h4>
+    </div>
+</div>
+<div class="page-body">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Details</h5>
+                    <div class="card-header-right">
+                        <i class="icofont icofont-rounded-down"></i>
+                        <i class="icofont icofont-refresh"></i>
+                        <i class="icofont icofont-close-circled"></i>
+                    </div>
+                </div>
+                <div class="card-block">
+                    <table class="table table-borderless">
+                        <tr>
+                            <td style="font-weight:bold;">
+                                Name:
+                            </td>
+                            <td>@Html.DisplayFor(model => model.name)</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:bold;">
+                                Description:
+                            </td>
+                            <td>@Html.DisplayFor(model => model.description)</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:bold;">
+                                Sub Category:
+                            </td>
+                            <td>@Html.DisplayFor(model => model.SubCategory.name)</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:bold;">
+                                Cost Price:
+                            </td>
+                            <td>@Html.DisplayFor(model => model.cost_price)</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:bold;">
+                                Sale Price:
+                            </td>
+                            <td>@Html.DisplayFor(model => model.sale_price)</td>
+                        </tr>
+                        
+                        <tr>
+                            <td style="font-weight:bold;">
+                                Featured:
+                            </td>
+                            <td>@Html.DisplayFor(model => model.featured_product)</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:bold;">
+                                Sale Percentage:
+                            </td>
+                            <td>@Html.DisplayFor(model => model.sale_percent)</td>
+                        </tr>
+                        
+                        <tr>
+                            <td style="font-weight:bold;">
+                                Picture:
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(model => model.picture)
+                            </td>
+                            @*<td>@Html.DisplayFor(model => model.picture)</td>*@
+                            <img height="50px" width="70px" src="@Url.Content(Model.picture)" />
+                        </tr>
+
+                    </table>
+
+                    <p>
+                        <a class="btn btn-primary" href="@Url.Action("Edit" , "Products" , new {id = Model.id})">Edit</a>
+                        <a class="btn btn-primary" href="@Url.Action("Index" , "Products")">Back</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

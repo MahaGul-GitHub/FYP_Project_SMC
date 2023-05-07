@@ -1,0 +1,442 @@
+﻿@using SwissMetroCookware.Models
+@{ 
+    int customers = ViewBag.customers;
+    int msgs = ViewBag.msgs;
+    int new_orders = ViewBag.new_orders;
+    int shipped_orders = ViewBag.shipped_orders;
+    int feedbacks = ViewBag.feedbacks;
+    int products = ViewBag.products;
+    int delivered = ViewBag.delivered;
+    int total_orders = ViewBag.total_orders;
+    int employees = ViewBag.employees;
+    int contacts = ViewBag.contacts;
+    int logistics = ViewBag.logistics;
+    string facebook = ViewBag.facebook;
+    string twitter = ViewBag.twitter;
+    string googleplus = ViewBag.googleplus;
+    string linkedin = ViewBag.linkedin;
+    List<Order> n_orders = ViewBag.n_orders;
+
+} 
+                                    <div class="page-header">
+                                        <div class="page-header-title">
+                                            <h4>Dashboard</h4>
+                                        </div>
+                                        <div class="page-header-breadcrumb">
+                                            <ul class="breadcrumb-title">
+                                                <li class="breadcrumb-item">
+                                                    <a href="@Url.Action("IndexAdmin", "Home")">
+                                                        <i class="icofont icofont-home"></i>
+                                                    </a>
+                                                </li>
+                                                <li class="breadcrumb-item">
+                                                    <a href="#!">Pages</a>
+                                                </li>
+                                                <li class="breadcrumb-item">
+                                                    <a href="#!">Dashboard</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="page-body">
+                                        <div class="row">
+                                            <div class="col-md-12 col-xl-4">
+                                                <!-- table card start -->
+                                                <div class="card table-card">
+                                                    <div class="">
+                                                        <div class="row-table">
+                                                            <div class="col-sm-6 card-block-big br">
+                                                                <div class="row">
+                                                                    <div class="col-sm-4">
+                                                                        <i class="icofont icofont-eye-alt text-success"></i>
+                                                                    </div>
+                                                                    <div class="col-sm-8 text-center">
+                                                                        <h5>@customers</h5>
+                                                                        <span>Customers</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6 card-block-big">
+                                                                <div class="row">
+                                                                    <div class="col-sm-4">
+                                                                        <i class="icofont icofont-truck text-danger"></i>
+                                                                    </div>
+                                                                    <div class="col-sm-8 text-center">
+                                                                        <h5>@logistics</h5>
+                                                                        <span>Logistics</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="">
+                                                        <div class="row-table">
+                                                            <div class="col-sm-6 card-block-big br">
+                                                                <div class="row">
+                                                                    <div class="col-sm-4">
+                                                                        <i class="icofont icofont-files text-info"></i>
+                                                                    </div>
+                                                                    <div class="col-sm-8 text-center">
+                                                                        <h5>@new_orders</h5>
+                                                                        <span>Orders</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6 card-block-big">
+                                                                <div class="row">
+                                                                    <div class="col-sm-4">
+                                                                        <i class="icofont icofont-envelope-open text-warning"></i>
+                                                                    </div>
+                                                                    <div class="col-sm-8 text-center">
+                                                                        <h5>@msgs</h5>
+                                                                        <span>Messages</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- table card end -->
+                                            </div>
+                                            <div class="col-md-12 col-xl-4">
+                                                <!-- table card start -->
+                                                <div class="card table-card">
+                                                    <div class="">
+                                                        <div class="row-table">
+                                                            <div class="col-sm-6 card-block-big br">
+                                                                <div class="row">
+                                                                    <div class="col-sm-4">
+                                                                        <div id="barchart" style="height:40px;width:40px;"></div>
+                                                                    </div>
+                                                                    <div class="col-sm-8 text-center">
+                                                                        <h5>@products</h5>
+                                                                        <span>Products</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6 card-block-big">
+                                                                <div class="row ">
+                                                                    <div class="col-sm-4">
+                                                                        <i class="icofont icofont-network text-primary"></i>
+                                                                    </div>
+                                                                    <div class="col-sm-8 text-center">
+                                                                        <h5>@employees</h5>
+                                                                        <span>Employees</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="">
+                                                        <div class="row-table">
+                                                            <div class="col-sm-6 card-block-big br">
+                                                                <div class="row ">
+                                                                    <div class="col-sm-4">
+                                                                        <div id="barchart2" style="height:40px;width:40px;"></div>
+                                                                    </div>
+                                                                    <div class="col-sm-8 text-center">
+                                                                        <h5>@total_orders</h5>
+                                                                        <span>Orders</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6 card-block-big">
+                                                                <div class="row ">
+                                                                    <div class="col-sm-4">
+                                                                        <i class="icofont icofont-network-tower text-primary"></i>
+                                                                    </div>
+                                                                    <div class="col-sm-8 text-center">
+                                                                        <h5>@contacts</h5>
+                                                                        <span>Contacts</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- table card end -->
+                                            </div>
+                                            <div class="col-md-12 col-xl-4">
+                                                <!-- widget primary card start -->
+                                                <div class="card table-card widget-primary-card">
+                                                    <div class="">
+                                                        <div class="row-table">
+                                                            <div class="col-sm-3 card-block-big">
+                                                                <i class="icofont icofont-star"></i>
+                                                            </div>
+                                                            <div class="col-sm-9">
+                                                                <h4>@feedbacks</h4>
+                                                                <h6>Feedbacks Received</h6>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- widget primary card end -->
+                                                <!-- widget-success-card start -->
+                                                <div class="card table-card widget-success-card">
+                                                    <div class="">
+                                                        <div class="row-table">
+                                                            <div class="col-sm-3 card-block-big">
+                                                                <i class="icofont icofont-trophy-alt"></i>
+                                                            </div>
+                                                            <div class="col-sm-9">
+                                                                <h4>@delivered</h4>
+                                                                <h6>Orders Delivered</h6>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- widget-success-card end -->
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="card">
+                                                    <div class="card-block">
+                                                        <iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&bgcolor=%23009688&ctz=Asia%2FKarachi&showTitle=0&showNav=0&showDate=0&showPrint=0&showTabs=0&showTz=0&src=YXJpYW5hZ3JhY2UzNjk2QGdtYWlsLmNvbQ&src=ZW4ucGsjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&color=%237986CB&color=%237986CB" style="border-width:0" width="465" height="300" frameborder="0" scrolling="no"></iframe>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="card">
+                                                    <div class="card-block">
+                                                        <div class="cd-horizontal-timeline">
+                                                            <div class="timeline">
+                                                                <div class="events-wrapper">
+                                                                    <div class="events">
+                                                                        <ol>
+                                                                            <li><a href="#0" data-date="16/01/2012" class="selected">16 Jan</a></li>
+                                                                            <li><a href="#0" data-date="28/02/2013">28 Feb</a></li>
+                                                                            <li><a href="#0" data-date="20/04/2014">20 Mar</a></li>
+                                                                            <li><a href="#0" data-date="20/05/2015">20 May</a></li>
+                                                                            <li><a href="#0" data-date="09/07/2016">09 Jul</a></li>
+                                                                            <li><a href="#0" data-date="30/08/2017">30 Aug</a></li>
+                                                                            <li><a href="#0" data-date="15/09/2018">15 Sep</a></li>
+                                                                            <li><a href="#0" data-date="01/11/2019">01 Nov</a></li>
+                                                                            <li><a href="#0" data-date="10/12/2020">10 Dec</a></li>
+                                                                            <li><a href="#0" data-date="19/01/2021">29 Jan</a></li>
+                                                                            <li><a href="#0" data-date="03/06/2022">3 June</a></li>
+                                                                        </ol>
+                                                                        <span class="filling-line" aria-hidden="true"></span>
+                                                                    </div>
+                                                                    <!-- .events -->
+                                                                </div>
+                                                                <!-- .events-wrapper -->
+                                                                <ul class="cd-timeline-navigation">
+                                                                    <li><a href="#0" class="prev inactive">Prev</a></li>
+                                                                    <li><a href="#0" class="next">Next</a></li>
+                                                                </ul>
+                                                                <!-- .cd-timeline-navigation -->
+                                                            </div>
+                                                            <!-- .timeline -->
+                                                            <div class="events-content">
+                                                                <ol>
+                                                                    <li class="selected" data-date="16/01/2012">
+                                                                        <h2>History Timeline</h2>
+                                                                        <em>January 16th, 2012</em>
+                                                                        <p class="m-b-0">
+                                                                            SWISS METRO COOKWARES was brought into existence by THREE business partners, Ihsan Ul Haq, Inam Sipra and Ihtesham.
+                                                                            Factory was manufacturing only silver and steel cookware at that time.
+                                                                        </p>
+                                                                       
+                                                                    </li>
+                                                                    <li data-date="28/02/2013">
+                                                                        <h2> Selected as Major business </h2>
+                                                                        <em>February 28th, 2013</em>
+                                                                        <p class="m-b-0">
+                                                                            At first, this factory was running as a side business but then after huge increase in profit, it was selected as a major business by Ihsan Ul Haq in February 2013.
+
+                                                                        </p>
+                                                                                                                                           </li>
+                                                                    <li data-date="20/04/2014">
+                                                                        <h2> Silver blocks </h2>
+                                                                        <em>March 20th, 2014</em>
+                                                                        <p class="m-b-0">
+                                                                            The owner took a step to get raw silver as a building block and started making silver blocks from it, which were used in further manufacturing process.
+
+                                                                        </p>
+                                                                       
+                                                                    </li>
+                                                                    <li data-date="20/05/2015">
+                                                                        <h2>Land was Bought</h2>
+                                                                        <em>May 20th, 2015</em>
+                                                                        <p class="m-b-0">
+                                                                            The land of Factory was at rent before but in 2015 May, it was bought by owner of factory.
+
+                                                                        </p>
+                                                                        
+                                                                    </li>
+                                                                    <li data-date="09/07/2016">
+                                                                        <h2>Planned for new unit addition </h2>
+                                                                        <em>July 9th, 2016</em>
+                                                                        <p class="m-b-0">
+                                                                            A plan was made to add a new unit in factory for introducing new products.
+                                                                        </p>
+                                                                        
+                                                                    </li>
+                                                                    <li data-date="30/08/2017">
+                                                                        <h2> Unit successfully installed </h2>
+                                                                        <em>August 30th, 2017</em>
+                                                                        <p class="m-b-0">
+                                                                            The new unit was successfully installed.
+                                                                        </p>
+                                                                        
+                                                                    </li>
+                                                                    <li data-date="15/09/2018">
+                                                                        <h2> partnership made with nonstick factory</h2>
+                                                                        <em>September 15th, 2018</em>
+                                                                        <p class="m-b-0">
+                                                                            A partnership was made with nonstick cookware factory.
+                                                                        </p>
+                                                                        
+                                                                    </li>
+                                                                    <li data-date="01/11/2019">
+                                                                        <h2> Plan for nonstick cookware factory </h2>
+                                                                        <em>November 1st, 2019</em>
+                                                                        <p class="m-b-0">
+                                                                            Partnership made with nonstick cookware factory was finished and factory started to plan for adding a new unit for nonstick cookware.
+
+                                                                        </p>
+                                                                        
+                                                                    </li>
+                                                                    <li data-date="10/12/2020">
+                                                                        <h2> Nonstick Cookware Unit  </h2>
+                                                                        <em>December 10th, 2020</em>
+                                                                        <p class="m-b-0">
+                                                                            A new unit for nonstick cookware was installed and started running successfully.
+                                                                        </p>
+                                                                        
+                                                                    </li>
+                                                                    <li data-date="19/01/2021">
+                                                                        <h2> Shop was rented </h2>
+                                                                        <em>January 19th, 2021</em>
+                                                                        <p class="m-b-0">
+                                                                            A shop was rented for direct sales of products, so that more revenue can be made.
+                                                                        </p>
+                                                                        
+                                                                    </li>
+                                                                    <li data-date="03/06/2022">
+                                                                        <h2> Ecommerce App </h2>
+                                                                        <em>June 3rd, 2022</em>
+                                                                        <p class="m-b-0">
+                                                                            Ecommerce App is made for the factory, so that the products could be sold all over the country.
+
+                                                                        </p>
+                                                                        
+                                                                    </li>
+                                                                </ol>
+                                                            </div>
+                                                            <!-- .events-content -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @{int loop_break = 0; }
+                                            <div class="col-lg-12">
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="card table-1-card">
+                                                            <div class="card-block">
+                                                                <div class="table-responsive">
+                                                                    <table class="table">
+                                                                        <thead>
+                                                                            <tr class="text-capitalize">
+                                                                                <th>Order #</th>
+                                                                                <th>Date</th>
+                                                                                <th>Amount</th>
+                                                                                <th>Customer</th>
+                                                                                <th>Email</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            @foreach (var item in n_orders)
+                                                                            {
+                                                                                if (loop_break == 10)
+                                                                                {
+                                                                                    break;
+                                                                                }
+                                                                            <tr>
+                                                                                
+                                                                                <td>@item.id</td>
+                                                                                <td>@item.date.ToLongDateString()</td>
+                                                                                <td>Rs. @item.amount</td>
+                                                                                <td>@item.Customer.name</td>
+                                                                                <td>@item.email</td>
+                                                                            </tr>
+                                                                                loop_break++;
+                                                                            }
+                                                                            
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12">
+                                                        <div class="card table-card group-widget">
+                                                            <div class="">
+                                                                <div class="row-table">
+                                                                    <div class="col-sm-4 bg-primary card-block-big">
+                                                                        <i class="icofont icofont-music"></i>
+                                                                        <p>1,586</p>
+                                                                    </div>
+                                                                    <div class="col-sm-4 bg-dark-primary card-block-big">
+                                                                        <i class="icofont icofont-video-clapper"></i>
+                                                                        <p>1,743</p>
+                                                                    </div>
+                                                                    <div class="col-sm-4 bg-darkest-primary card-block-big">
+                                                                        <i class="icofont icofont-email"></i>
+                                                                        <p>1,096</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-md-6 col-xl-3">
+                                                <div class="card social-widget-card">
+                                                    <div class="card-block-big bg-facebook">
+                                                        <span class="m-t-10">Facebook</span>
+                                                        <br />
+                                                        <br />
+                                                        <br />
+                                                        <a href="https://www.facebook.com/"><i class="icofont icofont-social-facebook"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-xl-3">
+                                                <div class="card social-widget-card">
+                                                    <div class="card-block-big bg-twitter">
+                                                        <span class="m-t-10">Twitter</span>
+                                                        <br />
+                                                        <br />
+                                                        <br />
+                                                        <i class="icofont icofont-social-twitter"><a href="https://twitter.com/"></a></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-xl-3">
+                                                <div class="card social-widget-card">
+                                                    <div class="card-block-big bg-linkein">
+                                                        <span class="m-t-10">Linked In</span>
+                                                        <br />
+                                                        <br />
+                                                        <br />
+                                                        <a href="https://www.linkedin.com/"><i class="icofont icofont-brand-linkedin"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-xl-3">
+                                                <div class="card social-widget-card">
+                                                    <div class="card-block-big bg-google-plus">
+
+                                                        <span class="m-t-10">Google Plus</span>
+                                                        <br />
+                                                        <br />
+                                                        <br />
+                                                        <a href="https://myaccount.google.com/?utm_source=sign_in_no_continue&pli=1"><i class="icofont icofont-social-google-plus"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>

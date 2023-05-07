@@ -1,0 +1,77 @@
+﻿@model IEnumerable<SwissMetroCookware.Models.Order>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<div class="page-header">
+    <div class="page-header-title">
+        <h4>Order</h4>
+    </div>
+</div>
+<div class="page-body">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Orders List</h5>
+                    <div class="card-header-right">
+                        <i class="icofont icofont-rounded-down"></i>
+                        <i class="icofont icofont-refresh"></i>
+                        <i class="icofont icofont-close-circled"></i>
+                    </div>
+                </div>
+                <div class="card-block">
+                    <table class="table table-bordered table-hover table-styling">
+                        <tr class="table-primary">
+                            <th>
+                                Customer
+                            </th>
+                            <th>
+                                Date
+                            </th>
+                            <th>
+                                Payment Method
+                            </th>
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                            </th>
+                        </tr>
+
+                        @foreach (var item in Model)
+                        {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Customer.name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.payment_type)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.status)
+                        </td>
+                        <td>
+                            <a class="btn btn-primary btn-sm btn-outline" href="@Url.Action("Edit" , "Orders" , new {id = item.id})"><i class="icofont icofont-edit-alt"></i></a>
+                            <a class="btn btn-primary btn-sm btn-outline" href="@Url.Action("Details" , "Orders" , new {id = item.id})"><i class="icofont icofont-info-circle"></i></a>
+                            <a class="btn btn-primary btn-sm btn-outline" href="@Url.Action("Delete" , "Orders" , new {id = item.id})"><i class="icofont icofont-trash"></i></a>
+                        </td>
+                    </tr>
+                        }
+
+                    </table>
+
+                    <a class="btn btn-primary" href="@Url.Action("Create" , "Orders")">Add New</a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

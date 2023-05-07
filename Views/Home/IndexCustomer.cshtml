@@ -1,0 +1,266 @@
+﻿@using SwissMetroCookware.Models
+@{
+    Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
+    List<SubCategory> sub = ViewBag.sub;
+    List<Product> sale = ViewBag.sale;
+    List<Product> featured = ViewBag.featured;
+    Model1 db = new Model1();
+    Sale s = db.Sales.FirstOrDefault();
+}
+
+
+<main class="main">
+    <section class="home-slider position-relative mb-30">
+        <div class="container">
+            <div class="home-slide-cover bg-grey-10 mt-30">
+                <div class="hero-slider-1 style-4 dot-style-1 dot-style-1-position-1">
+                    <div class="single-hero-slider single-animation-wrap">
+                        <div class="container">
+                            <div class="row align-items-center slider-animated-1">
+                                <div class="col-lg-5 col-md-6">
+                                    <div class="hero-slider-content-2">
+                                        <h4 class="animated">Trade-In Offer</h4>
+                                        <h3 class="animated fw-900">Supper Value Deals</h3>
+                                        <h2 class="animated fw-900 text-brand">On All Products</h2>
+                                        <p class="animated">Save more with sales and limited time offers!</p>
+                                        <a class="animated btn btn-brush btn-brush-3" href="@Url.Action("Shop" , "Home")" tabindex="0"> Shop Now </a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-7 col-md-6">
+                                    <div class="single-slider-img single-slider-img-1">
+                                        <img class="animated" src="~/Content/Customer/assets/imgs/slider/3.png" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="single-hero-slider single-animation-wrap">
+                        <div class="container">
+                            <div class="row align-items-center slider-animated-1">
+                                <div class="col-lg-5 col-md-6">
+                                    <div class="hero-slider-content-2">
+                                        <h4 class="animated">Hot promotions</h4>
+                                        <h3 class="animated fw-900">Trending Kitchenware</h3>
+                                        <h2 class="animated fw-900 text-brand">Great Collection</h2>
+                                        <p class="animated">Save more with sales upto @s.percentage % off</p>
+                                        <a class="animated btn btn-brush btn-brush-1" href="@Url.Action("Shop" , "Home")" tabindex="0"> Get It Now </a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-7 col-md-6">
+                                    <div class="single-slider-img single-slider-img-1">
+                                        <img class="animated" src="~/Content/Customer/assets/imgs/slider/4.png" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slider-arrow hero-slider-1-arrow"></div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <section class="popular-categories section-padding mt-15">
+        <div class="container wow fadeIn animated">
+            <h3 class="section-title mb-20"><span>Popular</span> Categories</h3>
+            <div class="carausel-6-columns-cover position-relative">
+                <div class="slider-arrow slider-arrow-2 carausel-6-columns-arrow" id="carausel-6-columns-arrows"></div>
+                <div class="carausel-6-columns" id="carausel-6-columns">
+                    @foreach (var item in sub)
+                    {
+                        <div class="card-1">
+                            <figure class=" img-hover-scale overflow-hidden">
+                                <a href="@Url.Action("Shop" , "Home" , new { id = item.id})"><img src="@Url.Content(item.picture)" height="160px" width="180px" alt="@item.name"></a>
+                            </figure>
+                            <h5><a href="#">@item.name</a></h5>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <br />
+    <br />
+
+    <div class="banner-bg wow fadeIn animated animated animated" style="background-image: url(../../Content/Customer/assets/imgs/banner/banner-8.jpg); visibility: visible;">
+        <div class="banner-content">
+            <h5 class="text-grey-4 mb-15">Shop Today’s Deals</h5>
+            <center><h1 class="fw-600"> @s.name <span class="text-brand"> Sale </span> Up to @s.percentage % off </h1></center>
+        </div>
+    </div>
+
+    <br />
+    <br />
+
+    <section class="pt-25 pb-15">
+        <div class="container wow fadeIn animated">
+            <h3 class="section-title mb-20"><span>Featured</span> Products</h3>
+            <div class="carausel-6-columns-cover position-relative">
+                <div class="slider-arrow slider-arrow-2 carausel-6-columns-arrow" id="carausel-6-columns-2-arrows"></div>
+                <div class="carausel-6-columns carausel-arrow-center" id="carausel-6-columns-2">
+                    @foreach (var item in featured)
+                    {
+                        <div class="product-cart-wrap small hover-up">
+                            <div class="product-img-action-wrap">
+                                <div class="product-img product-img-zoom">
+                                    <a href="@Url.Action("SingleProduct" , "Home" , new { id = item.id})">
+                                        <img class="default-img" height="120px" width="140px" src="@Url.Content(item.picture)" alt="@item.name">
+                                        <img class="hover-img" height="120px" width="140px" src="@Url.Content(item.picture)" alt="@item.name">
+                                    </a>
+                                </div>
+                                <div class="product-action-1">
+                                    
+                                    <a aria-label="Add To Cart" class="action-btn small hover-up" href="@Url.Action("AddToCart" , "Home" , new { id = item.id})" tabindex="0"><i class="fi-rs-shopping-cart"></i></a>
+                                </div>
+                                <div class="product-badges product-badges-position product-badges-mrg">
+                                    @if (item.quantity == 0)
+                                    {
+
+                                    <div class="product-badges product-badges-position product-badges-mrg">
+                                        <span class="featured">Out of Stock</span>
+                                    </div>
+                                    }
+                                    else if (item.sale_percent != "0" && item.sale_percent != null)
+                                    {
+                                    <span class="sale">- @item.sale_percent %</span>
+                                    }
+                                    else
+                                    {
+                                    <span class="hot">Hot</span>
+
+                                    }
+                                </div>
+                            </div>
+                            <div class="product-content-wrap">
+                                <h2><a href="@Url.Action("SingleProduct" , "Home" , new { id = item.id})">@item.name</a></h2>
+
+                                <div class="product-price">
+                                    @if (item.sale_percent != "0" && item.sale_percent != null)
+                                    {
+                                        int old_price = Convert.ToInt32(item.sale_price);
+                                        int sale_percent = Convert.ToInt32(item.sale_percent);
+                                        int discount = (old_price * sale_percent) / 100;
+                                        int new_price = old_price - discount;
+                                        <span>Rs. @new_price</span>
+                                        <span class="old-price">Rs. @old_price</span>
+
+                                    }
+                                    else
+                                    {
+                                        <span>Rs. @Convert.ToInt32(item.sale_price) </span>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+    @*<section class="section-padding">
+            <div class="container pb-20">
+                <h3 class="section-title mb-20 wow fadeIn animated"><span>Sale</span> Items</h3>
+                <div class="carausel-6-columns-cover position-relative">
+                    <div class="slider-arrow slider-arrow-2 carausel-6-columns-arrow" id="carausel-6-columns-2-arrows"></div>
+                    <div class="carausel-6-columns carausel-arrow-center" id="carausel-6-columns-2">
+                        @foreach (var item in featured)
+                        {
+                            <div class="product-cart-wrap small hover-up">
+                                <div class="product-img-action-wrap">
+                                    <div class="product-img product-img-zoom">
+                                        <a href="shop-product-right.html">
+                                            <img class="default-img" src="@Url.Content(item.picture)" alt="@item.name">
+                                            <img class="hover-img" src="@Url.Content(item.picture)" alt="@item.name">
+                                        </a>
+                                    </div>
+                                    <div class="product-action-1">
+                                        <a aria-label="Quick view" class="action-btn small hover-up" data-bs-toggle="modal" data-bs-target="#quickViewModal">
+                                            <i class="fi-rs-eye"></i>
+                                        </a>
+                                        <a aria-label="Add To Wishlist" class="action-btn small hover-up" href="@Url.Action("AddToCart", "Home", new { id = item.id })" tabindex="0"><i class="fi-rs-heart"></i></a>
+                                    </div>
+                                    <div class="product-badges product-badges-position product-badges-mrg">
+
+                                        <span class="hot">- @item.sale_percent</span>
+
+                                    </div>
+                                </div>
+                                <div class="product-content-wrap">
+                                    <h2><a href="@Url.Action("SingleProduct", "Home", new { id = item.id })">@item.name</a></h2>
+
+                                    <div class="product-price">
+
+                                        @if (item.sale_percent != "0" && item.sale_percent != null)
+                                        {
+                                            int old_price = Convert.ToInt32(item.sale_price);
+                                            int sale_percent = Convert.ToInt32(item.sale_percent);
+
+                                            int new_price = (old_price / sale_percent) * 100;
+
+
+                                        <span>Rs. @new_price</span>
+                                        <span class="old-price">Rs. @old_price</span>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+        </section>*@
+
+
+
+
+
+
+
+    <section class="featured section-padding">
+        <div class="container pb-25">
+            <div class="row">
+                <div class="col-lg-2 col-md-4 mb-md-3 mb-lg-0">
+                    <div class="banner-features wow fadeIn animated hover-up">
+                        <img src="~/Content/Customer/assets/imgs/theme/icons/feature-1.png" alt="">
+                        <h4 class="bg-1">Timely Shipping</h4>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-md-3 mb-lg-0">
+                    <div class="banner-features wow fadeIn animated hover-up">
+                        <img src="~/Content/Customer/assets/imgs/theme/icons/feature-2.png" alt="">
+                        <h4 class="bg-3">Online Order</h4>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-md-3 mb-lg-0">
+                    <div class="banner-features wow fadeIn animated hover-up">
+                        <img src="~/Content/Customer/assets/imgs/theme/icons/feature-3.png" alt="">
+                        <h4 class="bg-2">Save Money</h4>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-md-3 mb-lg-0">
+                    <div class="banner-features wow fadeIn animated hover-up">
+                        <img src="~/Content/Customer/assets/imgs/theme/icons/feature-4.png" alt="">
+                        <h4 class="bg-4">Promotions</h4>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-md-3 mb-lg-0">
+                    <div class="banner-features wow fadeIn animated hover-up">
+                        <img src="~/Content/Customer/assets/imgs/theme/icons/feature-5.png" alt="">
+                        <h4 class="bg-5">Happy Sell</h4>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-md-3 mb-lg-0">
+                    <div class="banner-features wow fadeIn animated hover-up">
+                        <img src="~/Content/Customer/assets/imgs/theme/icons/feature-6.png" alt="">
+                        <h4 class="bg-6">24/7 Support</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+

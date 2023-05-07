@@ -1,0 +1,74 @@
+﻿@model SwissMetroCookware.Models.Feedback
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="page-header">
+    <div class="page-header-title">
+        <h4>Feedback</h4>
+    </div>
+</div>
+<div class="page-body">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Details</h5>
+                    <div class="card-header-right">
+                        <i class="icofont icofont-rounded-down"></i>
+                        <i class="icofont icofont-refresh"></i>
+                        <i class="icofont icofont-close-circled"></i>
+                    </div>
+                </div>
+                <div class="card-block">
+
+                    <div>
+                        <h4>Feedback</h4>
+                        <hr />
+                        <dl class="dl-horizontal">
+                            <dt>
+                                Customer
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Customer.name)
+                            </dd>
+
+
+                            <dt>
+                                Product
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Product.name)
+                            </dd>
+
+                            <dt>
+                                Feedback
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.feedback1)
+                            </dd>
+
+                            <dt>
+                                Rating
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.rating)
+                            </dd>
+
+                        </dl>
+                    </div>
+                    <p>
+                        <a class="btn btn-primary" href="@Url.Action("Edit" , "Feedbacks" , new {id = Model.id})">Edit</a>
+                        <a class="btn btn-primary" href="@Url.Action("Index" , "Feedbacks")">Back</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

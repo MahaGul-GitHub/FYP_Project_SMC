@@ -1,0 +1,59 @@
+﻿@model SwissMetroCookware.Models.Admin
+
+@{
+    Layout = "~/Views/Shared/_LayoutManager.cshtml";
+
+    ViewBag.Title = "Details";
+}
+
+<div class="page-header">
+    <div class="page-header-title">
+        <h4>Admin</h4>
+    </div>
+</div>
+<div class="page-body">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Details</h5>
+                    <div class="card-header-right">
+                        <i class="icofont icofont-rounded-down"></i>
+                        <i class="icofont icofont-refresh"></i>
+                        <i class="icofont icofont-close-circled"></i>
+                    </div>
+                </div>
+                <div class="card-block">
+                    <table class="table table-borderless">
+                        <tr>
+                            <td style="font-weight:bold;">
+                                Name:
+                            </td>
+                            <td>@Html.DisplayFor(model => model.Employee.name)</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:bold;">
+                                Email Address:
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => model.email)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:bold;">
+                            Password:
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.password)
+                    </td>
+                </tr>
+                </table>
+
+                <p>
+                    <a class="btn btn-primary" href="@Url.Action("Edit" , "Admins" , new { id = Model.id})">Edit</a>
+                </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

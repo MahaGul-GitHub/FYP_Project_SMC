@@ -1,0 +1,88 @@
+﻿@using SwissMetroCookware.Models
+@{      Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
+
+    Order o = ViewBag.order;
+    Model1 db = new Model1();
+    List<OrderDetail> od = db.OrderDetails.Where(x => x.order_fid == o.id).ToList();
+    }
+
+<main class="main">
+        <div class="page-header breadcrumb-wrap">
+            <div class="container">
+                <div class="breadcrumb">
+                    <a href="@Url.Action(" IndexCustomer" , "Home")" rel="nofollow">Home</a>
+                    <span></span> Shop
+                    <span></span> Checkout
+                    <span></span> Order Booked
+                </div>
+            </div>
+        </div>
+        <section class="mt-50 mb-50">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 mb-sm-15">
+                        <div class="toggle_info">
+                            <span><i class="fi-rs-check"></i><span class="text-muted"> &nsub; Your Order Has Been Placed Successfully!</span> 
+                        </div>
+                        
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="toggle_info">
+                            <span><i class="fi-rs-label mr-10"></i><span class="text-muted">Your Order ID is: </span> <a href="#" data-bs-toggle="collapse" class="collapsed" aria-expanded="false">Order # @o.id</a></span>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="divider mt-50 mb-50"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    
+                    <div class="col-md-12">
+                        <div class="order_review">
+                            <div class="mb-20">
+                                <h4>Your Orders</h4>
+                            </div>
+                            <div class="table-responsive order_table text-center">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="2">Product</th>
+                                            <th>Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in od)
+                                        {
+                                            <tr>
+                                                <td class="image product-thumbnail"><img src="@Url.Content(item.Product.picture)" alt="SMC"></td>
+                                                <td>
+                                                    <h5><a href="@Url.Action("SingleProduct" , "Home" , new { id = item.Product.id})">@item.Product.name</a></h5> <span class="product-qty">x @item.quantity</span>
+                                                </td>
+                                                <td>
+                                                @{
+                                                    int sub = (Convert.ToInt32(item.sale_price) * item.quantity);
+
+                                                        }
+                                                    Rs. @sub
+                                                </td>
+                                            </tr>
+                                        }
+
+                                        <tr>
+                                            <th>Total</th>
+                                            <td colspan="2" class="product-subtotal"><span class="font-xl text-brand fw-900">Rs. @o.amount</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>                            
+                            <a href="@Url.Action("Shop", "Home")" class="btn btn-fill-out btn-block mt-30">Continue Shopping</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    

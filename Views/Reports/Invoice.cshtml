@@ -1,0 +1,191 @@
+﻿
+@using SwissMetroCookware.Models;
+@{
+
+    Model1 db = new Model1();
+    List<OrderDetail> od = ViewBag.od;
+    Order o = ViewBag.o;
+    ViewBag.Title = "Invoice";
+}
+
+
+<div class="main-body">
+    <div class="page-wrapper">
+        <!-- Page body start -->
+        <div class="page-body">
+            <!-- Container-fluid starts -->
+            <div class="container">
+                <!-- Main content starts -->
+                <div>
+                    <!-- Invoice card start -->
+                    <div id="printArea">
+
+                        <div class="card">
+                            <div class="row invoice-contact">
+                                <div class="col-md-8">
+                                    <div class="invoice-box row">
+                                        <div class="col-sm-12">
+                                            <table class="table table-responsive invoice-table table-borderless">
+                                                <tbody>
+                                                    <tr>
+                                                        <td><img src="@Url.Content(db.Companies.Select(x => x.name).FirstOrDefault())" class="m-b-10" alt=""></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>@db.Companies.Select(x => x.name).FirstOrDefault()</td>
+                                                    </tr>
+                                                    <tr width="150px">
+                                                        <td width="150px">@db.Companies.Select(x => x.address).FirstOrDefault()</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            @db.Companies.Select(x => x.email).FirstOrDefault()
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>@db.Companies.Select(x => x.contact1).FirstOrDefault()</td>
+                                                    </tr>
+                                                    <!-- <tr>
+                                                        <td><a href="#" target="_blank">www.demo.com</a>
+                                                        </td>
+                                                    </tr> -->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="row text-center">
+                                        <div class="col-sm-12 invoice-btn-group">
+                                            <button onclick="printFunction()" class="btn btn-fill-out btn-block mt-30">Print</button>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-block">
+                                <div class="row invoive-info">
+                                    <div class="col-md-4 col-xs-12 invoice-client-info">
+                                        <h6>Client Information :</h6>
+                                        <h6 class="m-0">@o.Customer.name</h6>
+                                        <p class="m-0 m-t-5" style="width:100px">@o.Customer.address</p>
+                                        <p class="m-0">@o.Customer.contact</p>
+                                        <p>@o.Customer.email</p>
+                                    </div>
+                                    <div class="col-md-4 col-sm-6">
+                                        <h6>Order Information :</h6>
+                                        <table class="table table-responsive invoice-table invoice-order table-borderless">
+                                            <tbody>
+                                                <tr>
+                                                    <th>Date :</th>
+                                                    <td>@o.date.ToLongDateString()</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Status :</th>
+                                                    <td>
+                                                        <span class="label label-warning">@o.status</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Id :</th>
+                                                    <td>
+                                                        #@o.id
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col-md-4 col-sm-6">
+                                        <h6 class="m-b-20">Invoice Number   <span>#</span>1234 @o.id</h6>
+                                        <h6 class="text-uppercase text-primary">
+                                            Total Due :
+                                            <span>Rs. @o.amount</span>
+                                        </h6>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="table-responsive">
+                                            <table class="table  invoice-detail-table">
+                                                <thead>
+                                                    <tr class="thead-default">
+                                                        <th>Description</th>
+                                                        <th>Quantity</th>
+                                                        <th>Amount</th>
+                                                        <th>Total</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var item in od)
+                                                    {
+                                                        <tr>
+                                                            <td>
+                                                                <h6>@item.Product.name</h6>
+                                                                <p>@item.Product.description</p>
+                                                            </td>
+                                                            <td>@item.quantity</td>
+                                                            <td>Rs. @item.sale_price</td>
+                                                            @{
+                                                                int sub_t = (item.quantity * Convert.ToInt32(item.sale_price));
+                                                            }
+                                                            <td>Rs. @sub_t</td>
+                                                        </tr>
+                                                    }
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <table class="table table-responsive invoice-table invoice-total">
+                                            <tbody>
+                                                <tr>
+                                                    <th>Sub Total :</th>
+                                                    <td>Rs. @o.amount</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Shipping :</th>
+                                                    <td>Rs. 0</td>
+                                                </tr>
+                                                <tr class="text-info">
+                                                    <td>
+                                                        <hr />
+                                                        <h5 class="text-primary">Total  :</h5>
+                                                    </td>
+                                                    <td>
+                                                        <hr />
+                                                        <h5 class="text-primary">Rs. @o.amount</h5>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <h6>Terms And Condition :</h6>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Invoice card end -->
+                    </div>
+                </div>
+            </div>
+            <!-- Container ends -->
+        </div>
+        <!-- Page body end -->
+    </div>
+</div>
+
+
+
+
+<script>
+    function printFunction() {
+        window.print();
+    }
+</script>

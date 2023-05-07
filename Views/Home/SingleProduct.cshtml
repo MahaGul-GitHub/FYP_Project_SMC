@@ -1,0 +1,276 @@
+﻿@using SwissMetroCookware.Models
+
+
+@{
+    Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
+    Product p = ViewBag.product;
+    List<Product> related_list = ViewBag.related;
+}
+
+<main class="main">
+    <div class="page-header breadcrumb-wrap">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="@Url.Action("IndexCustomer" , "Home")" rel="nofollow">Home</a>
+                <span></span> Shop
+                <span></span> @p.name
+            </div>
+        </div>
+    </div>
+    <section class="mt-50 mb-50">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="product-detail accordion-detail">
+                        <div class="row mb-50">
+                            <div class="col-md-6 col-sm-12 col-xs-12">
+                                <div class="detail-gallery">
+                                    <span class="zoom-icon"><i class="fi-rs-search"></i></span>
+                                    <!-- MAIN SLIDES -->
+                                    <div class="product-image-slider">
+                                        <figure class="border-radius-10">
+                                            <img src="@Url.Content(p.picture)" alt="product image">
+                                        </figure>
+                                    </div>
+                                    <!-- THUMBNAILS -->
+
+                                </div>
+                                <!-- End Gallery -->
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xs-12">
+                                <div class="detail-info">
+                                    <h2 class="title-detail">@p.name</h2>
+                                    <div class="product-detail-rating">
+                                        <div class="pro-details-brand">
+                                            <span> Sub Category: <a href="shop-grid-right.html">@p.SubCategory.name</a></span>
+                                        </div>
+                                        @*<div class="product-rate-cover text-end">
+                            <div class="product-rate d-inline-block">
+                                <div class="product-rating" style="width:90%">
+                                </div>
+                            </div>
+                        </div>*@
+                                    </div>
+                                    <div class="clearfix product-price-cover">
+                                        <div class="product-price primary-color float-left">
+                                            @{
+                                                int price = 0;
+                                                int percent = 0;
+                                                int discount_price = 0;
+                                                int new_price = 0;
+
+
+                                                price = Convert.ToInt32(p.sale_price);
+                                            }
+                                            @if (p.sale_percent != "0" && p.sale_percent != null)
+                                            {
+                                                percent = Convert.ToInt32(p.sale_percent);
+                                                discount_price = (price * percent) / 100;
+                                                new_price = price - discount_price;
+
+                                                <p>
+                                                    <ins><span class="text-brand">Rs. @new_price</span></ins>
+                                                    <ins><span class="old-price font-md ml-15">Rs. @price</span></ins>
+                                                    <span class="save-price  font-md color3 ml-15">@p.sale_percent % Off</span>
+
+                                                </p>
+
+                                            }
+                                            else
+                                            {
+                                                <ins><span class="text-brand">Rs. @Convert.ToInt32(p.sale_price)</span></ins>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="bt-1 border-color-1 mt-15 mb-15"></div>
+                                    <div class="short-desc mb-30">
+                                        <p>@p.description</p>
+                                    </div>
+                                    <div class="product_sort_info font-xs mb-30">
+                                        <ul>
+                                            <li class="mb-10"><i class="fi-rs-crown mr-5"></i> 1 Year Warranty</li>
+                                            <li><i class="fi-rs-credit-card mr-5"></i> Cash on Delivery available</li>
+                                        </ul>
+                                    </div>
+                                    <div class="bt-1 border-color-1 mt-30 mb-30"></div>
+                                    <div class="detail-extralink">
+                                        @*<div class="detail-qty border radius">
+                            <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
+                            <span class="qty-val">1</span>
+                            <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
+                        </div>*@
+                                        <div class="product-extra-link2">
+                                            @if (p.quantity == 0)
+                                            {
+                                                <a href="#" class="action-btn hover-up"><i class="fi-rs-shopping-cart"></i></a>
+                                                <a href="#" class="button button-add-to-cart">Place Custom Order</a>
+                                            }
+                                            else
+                                            {
+                                                <a href="@Url.Action("AddToCart", "Home", new { id = p.id })" class="action-btn hover-up"><i class="fi-rs-shopping-cart"></i></a>
+
+                                            }
+
+                                            <a aria-label="Add To Wishlist" class="action-btn hover-up" href="@Url.Action("AddToWishlist" , "Home" , new { id = p.id})"><i class="fi-rs-heart"></i></a>
+                                        </div>
+                                    </div>
+                                    <ul class="product-meta font-xs color-grey mt-50">
+                                        @if (p.quantity != 0)
+                                        {
+                                            <li>Availability:<span class="in-stock text-success ml-5">@p.quantity Items In Stock</span></li>
+                                        }
+                                        else
+                                        {
+                                            <li>Availability:<span class="in-stock text-danger ml-5">Out of Stock</span></li>
+
+                                        }
+                                    </ul>
+                                </div>
+                                <!-- Detail Info -->
+                            </div>
+                        </div>
+
+                        @*<div class="row mt-60">
+            <div class="col-12">
+                <h3 class="section-title style-1 mb-30">Related products</h3>
+            </div>
+            <div class="col-12">
+                <div class="row related-products">
+                    @for (int i = 0; i < 4; i++)
+                            {
+                                Product prod = related_list[i];
+                    <div class="col-lg-3 col-md-4 col-12 col-sm-6">
+
+                        <div class="product-cart-wrap small hover-up">
+                            <div class="product-img-action-wrap">
+                                <div class="product-img product-img-zoom">
+                                    <a href="shop-product-right.html" tabindex="0">
+                                        <img class="default-img" src="@Url.Content(prod.picture)" height="170px" width="100px">
+                                        <img class="hover-img" src="@Url.Content(prod.picture)" height="170px" width="100px">
+                                    </a>
+                                </div>
+                                <div class="product-action-1">
+                                    <a aria-label="Add To Wishlist" class="action-btn small hover-up" href="@Url.Action("AddToWishlist" , "Home" , new { id = prod.id})" tabindex="0"><i class="fi-rs-heart"></i></a>
+                                </div>
+                                    @if (p.sale_percent != "0" && p.sale_percent != null)
+                                    {
+                                        <div class="product-badges product-badges-position product-badges-mrg">
+                                            <span class="sale">- @p.sale_percent %</span>
+                                        </div>
+                                    }
+                                    else if (p.featured_product == "Yes")
+                                    {
+                                        <div class="product-badges product-badges-position product-badges-mrg">
+                                            <span class="hot">Featured</span>
+                                        </div>
+                                    }
+
+                            </div>
+                            <div class="product-content-wrap">
+                                <h2><a href="@Url.Action("SingleProduct" , "Home" , new { id = prod.id})" tabindex="0">@prod.name</a></h2>
+
+                                <div class="product-price">
+                                    @{
+                                        int price1 = 0;
+                                        int percent1 = 0;
+                                        int discount_price1 = 0;
+                                        int new_price1 = 0;
+
+                                        price1 = Convert.ToInt32(prod.sale_price);
+                                    }
+
+                                    @if (p.sale_percent != "0" && p.sale_percent != null)
+                                    {
+                                        percent1 = Convert.ToInt32(prod.sale_percent);
+                                        discount_price1 = (price1 * percent1) / 100;
+                                        new_price1 = price1 - discount_price1;
+                                        <p height="40px">
+                                            <span>Rs. @new_price1</span>
+                                            <span class="old-price">Rs. @price1</span>
+                                        </p>
+                                    }
+                                    else
+                                    {
+                                        <span>Rs. @prod.sale_price</span>
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    }
+                </div>
+            </div>
+        </div>*@
+
+                        <div class="row mt-60">
+                            <div class="col-12">
+                                <h3 class="section-title style-1 mb-30">Related products</h3>
+                            </div>
+                            <div class="carausel-6-columns-cover position-relative">
+                                <div class="slider-arrow slider-arrow-2 carausel-6-columns-arrow" id="carausel-6-columns-2-arrows"></div>
+                                <div class="carausel-6-columns carausel-arrow-center" id="carausel-6-columns-2">
+                                    @foreach (var item in related_list)
+                                    {
+                                        <div class="product-cart-wrap small hover-up">
+                                            <div class="product-img-action-wrap">
+                                                <div class="product-img product-img-zoom">
+                                                    <a href="@Url.Action("SingleProduct" , "Home" , new { id = item.id})">
+                                                        <img class="default-img" height="120px" width="140px" src="@Url.Content(item.picture)" alt="@item.name">
+                                                        <img class="hover-img" height="120px" width="140px" src="@Url.Content(item.picture)" alt="@item.name">
+                                                    </a>
+                                                </div>
+                                                <div class="product-action-1">
+
+                                                    <a aria-label="Add To Cart" class="action-btn small hover-up" href="@Url.Action("AddToCart" , "Home" , new { id = item.id})" tabindex="0"><i class="fi-rs-shopping-cart"></i></a>
+                                                </div>
+                                                <div class="product-badges product-badges-position product-badges-mrg">
+                                                    @if (item.quantity == 0)
+                                                    {
+
+                                                        <div class="product-badges product-badges-position product-badges-mrg">
+                                                            <span class="featured">Out of Stock</span>
+                                                        </div>
+                                                    }
+                                                    else if (item.sale_percent != "0" && item.sale_percent != null)
+                                                    {
+                                                        <span class="sale">- @item.sale_percent %</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="hot">Hot</span>
+
+                                                    }
+                                                </div>
+                                            </div>
+                                            <div class="product-content-wrap">
+                                                <h2><a href="@Url.Action("SingleProduct" , "Home" , new { id = item.id})">@item.name</a></h2>
+
+                                                <div class="product-price">
+                                                    @if (item.sale_percent != "0" && item.sale_percent != null)
+                                                    {
+                                                        int old_price = Convert.ToInt32(item.sale_price);
+                                                        int sale_percent = Convert.ToInt32(item.sale_percent);
+                                                        int discount = (old_price * sale_percent) / 100;
+                                                        int new_pricee = old_price - discount;
+                                                        <span>Rs. @new_pricee</span>
+                                                        <span class="old-price">Rs. @old_price</span>
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <span>Rs. @Convert.ToInt32(item.sale_price) </span>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

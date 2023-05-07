@@ -1,0 +1,119 @@
+﻿@using SwissMetroCookware.Models
+@{
+    Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
+}
+
+@{
+    Model1 db = new Model1();
+    Company office = db.Companies.Where(x => x.id == 1).FirstOrDefault();
+    Company factory = db.Companies.Where(x => x.id == 2).FirstOrDefault();
+    Misc location = db.Miscs.Where(x => x.id == 6).FirstOrDefault();
+
+ }
+
+<main class="main">
+    <div class="page-header breadcrumb-wrap">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="@Url.Action("IndexCustomer" , "Home")" rel="nofollow">Home</a>
+                <span></span> Pages
+                <span></span> Contact us
+            </div>
+        </div>
+    </div>
+    <section class="hero-2 bg-green">
+        <div class="hero-content">
+            <div class="container">
+                <div class="text-center">
+                    <h4 class="text-brand mb-20">Get in touch</h4>
+                    <h1 class="mb-20 wow fadeIn animated font-xxl fw-900">
+                        Let's Talk About <br>Your <span class="text-style-1">Idea</span>
+                    </h1>
+                    <p class="w-50 m-auto mb-50 wow fadeIn animated">We pride ourselves in our customer satisfaction and services, and we are continously growing due to our loyal fans who provide us with constructive criticism and help us grow into better versions of ourselves...</p>
+                    <p class="wow fadeIn animated">
+                        <a class="btn btn-brand btn-lg font-weight-bold text-white border-radius-5 btn-shadow-brand hover-up" href="@Url.Action("About" , "Home")">About Us</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section-border pt-50 pb-50">
+        <div class="container">
+            <div id='map-panes' class="leaflet-map mb-50">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3377.31034359314!2d74.18520131450093!3d32.16890502205061!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391f298941d0f8f7%3A0x7519810af1dad1ba!2sD%20Point%20Plaza%2C%20Service%20Rd%2C%20Civil%20Lines%2C%20Gujranwala%2C%20Punjab%2C%20Pakistan!5e0!3m2!1sen!2s!4v1654599980500!5m2!1sen!2s" width="1150" height="380" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+            <br />
+            <br />
+            <div class="row">
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h4 class="mb-15 text-brand">Office</h4>
+                    <p>@office.address</p>
+                    <abbr title="Phone">Phone:</abbr> @office.contact1<br>
+                    <abbr title="Email">Email: </abbr><a href="#" class="__cf_email__" data-cfemail="04676b6a706567704441726576652a676b69">@office.email</a><br>
+                </div>
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h4 class="mb-15 text-brand">Factory</h4>
+                    <p></p>
+                    <abbr title="Phone">Phone:</abbr> @factory.contact1<br>
+                    <abbr title="Email">Email: </abbr><a href="#" class="__cf_email__" data-cfemail="15767a7b617476615550637467743b767a78">@office.email</a><br>
+                    @*<a class="btn btn-outline btn-sm btn-brand-outline font-weight-bold text-brand bg-white text-hover-white mt-20 border-radius-5 btn-shadow-brand hover-up"><i class="fi-rs-marker mr-10"></i>View map</a>*@
+                </div>
+                <div class="col-md-4">
+                    <h4 class="mb-15 text-brand">Shop</h4>
+                    968/11 43 Avenue 0675<br>
+                    Gujranwala, Pakistan<br>
+                    <abbr title="Phone">Phone:</abbr> (055) 456-7890<br>
+                    <abbr title="Email">Email: </abbr><a href="#" class="__cf_email__" data-cfemail="4f2c20213b2e2c3b0f0a392e3d2e612c2022">@office.email</a><br>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="pt-50 pb-50">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-8 col-lg-10 m-auto">
+                    <div class="contact-from-area padding-20-row-col wow FadeInUp">
+                        <h3 class="mb-10 text-center">Drop Us a Line</h3>
+                        <p class="text-muted mb-30 text-center font-sm">Your feedback is very important to us!</p>
+                        @using (Html.BeginForm("Create" , "Messages"))
+                        {
+                            @Html.AntiForgeryToken()
+                        <form class="contact-form-style text-center" id="contact-form" action="#" method="post">
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6">
+                                        <div class="input-style mb-20">
+                                            <input name="first_name" placeholder="First Name" type="text">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6">
+                                        <div class="input-style mb-20">
+                                            <input name="email" placeholder="Your Email" type="email">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6">
+                                        <div class="input-style mb-20">
+                                            <input name="contact" placeholder="Your Phone" type="tel">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6">
+                                        <div class="input-style mb-20">
+                                            <input name="subject" placeholder="Subject" type="text">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12">
+                                        <div class="textarea-style mb-30">
+                                            <textarea name="body" placeholder="Message"></textarea>
+                                        </div>
+                                        <button class="submit submit-auto-width" type="submit">Send message</button>
+                                    </div>
+                                </div>
+                            </form>
+
+                        }
+                            <p class="form-messege"></p>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

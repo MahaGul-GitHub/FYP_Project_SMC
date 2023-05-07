@@ -1,0 +1,88 @@
+﻿@using SwissMetroCookware.Models
+@{
+    ViewBag.Title = "ReviewCancellaions";
+    List<Order> o = ViewBag.o;
+    int serial = 1;
+}
+
+
+<div class="page-header">
+    @*<div class="page-header-title">
+            <h4>New Orders</h4>
+        </div>*@
+</div>
+<div class="page-body">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Pending Cancellations</h5>
+                    <div class="card-header-right">
+                        <i class="icofont icofont-rounded-down"></i>
+                        <i class="icofont icofont-refresh"></i>
+                        <i class="icofont icofont-close-circled"></i>
+                    </div>
+                </div>
+                <div class="card-block">
+                    <table class="table table-bordered table-hover table-styling">
+                        <tr class="table-primary">
+                            <th width="30px">Sr.#</th>
+                            <th>Order ID</th>
+                            <th>
+                                Customer
+                            </th>
+                            <th>
+                                Date
+                            </th>
+                            <th>
+                                Payment Method
+                            </th>
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                            </th>
+                        </tr>
+                        @if (o.Count() == 0 || o == null)
+                        {
+                            <tr><td colspan="5"><center><span>Nothing To Show Here!</span></center></td></tr>
+                        }
+                        else
+                        {
+
+                            foreach (var item in o)
+                            {
+                                <tr>
+                                    <td>
+                                        @serial
+                                    </td>
+                                    <td>@item.id</td>
+                                    <td>
+                                        @item.Customer.name
+                                    </td>
+                                    <td>
+                                        @item.date.ToLongDateString()
+                                    </td>
+                                    <td>
+                                        @item.payment_type
+                                    </td>
+                                    <td>Cancelllation Pending</td>
+                                    <td>
+                                        <center>
+                                            <a class="btn btn-danger btn-sm btn-outline" href="@Url.Action("ConfirmCancellaion", "Home", new { id = item.id })">Cancel Order</a>
+                                        </center>
+                                    </td>
+                                </tr>
+                                serial++;
+                            }
+                        }
+                        </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

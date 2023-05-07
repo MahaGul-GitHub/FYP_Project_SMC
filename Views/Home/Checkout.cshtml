@@ -1,0 +1,203 @@
+﻿@using SwissMetroCookware.Models
+
+@{
+    Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
+    List<Product> list = new List<Product>();
+    list = ViewBag.cart;
+    Customer c = (Customer)Session["Customer"];
+    int total_bill = ViewBag.total;
+    int p_dc = ViewBag.punjab;
+    int s_dc = ViewBag.sindh;
+    int kpk_dc = ViewBag.kpk;
+    int gb_dc = ViewBag.gb;
+    int b_dc = ViewBag.b;
+    int dc1 = 0;
+    if(c.province == "Punjab")
+    {
+        dc1 = p_dc;
+    }
+    else if (c.province == "Sindh")
+    {
+        dc1 = s_dc;
+    }
+    else if (c.province == "KPK")
+    {
+        dc1 = kpk_dc;
+    }
+    else if (c.province == "Balochistan")
+    {
+        dc1 = b_dc;
+    }
+    else if (c.province == "Gilgit Baltistan")
+    {
+        dc1 = gb_dc;
+    }
+    int total = total_bill + dc1;
+}
+
+<main class="main">
+    <div class="page-header breadcrumb-wrap">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="@Url.Action("IndexCustomer" , "Home")" rel="nofollow">Home</a>
+                <span></span> Shop
+                <span></span> Checkout
+            </div>
+        </div>
+    </div>
+    @using (Html.BeginForm("PayNow", "Home", FormMethod.Post))
+    {
+
+        <section class="mt-50 mb-50">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 mb-sm-15">
+                        <div class="toggle_info">
+                            <p class="text-muted">@c.name</p>
+                            <span><i class="fi-rs-user mr-10"></i><span class="text-muted">Switch account?</span> <a href="@Url.Action("ChangeAccount", "Customers")" data-bs-toggle="collapse" class="collapsed" aria-expanded="false">Click here!</a></span>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="divider mt-50 mb-50"></div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-25">
+                            <h4>Billing Details</h4>
+                        </div>
+
+                        <div class="form-group">
+                            Email Address:
+                            <input type="text" name="email" value="@c.email">
+                        </div>
+                        <div class="form-group">
+                            Shipping Address:
+                            <input type="text" name="address" value="@c.address">
+                        </div>
+                        <div class="form-group">
+                            Phone Number:
+                            <input required="" type="text" name="contact" value="@c.contact">
+                        </div>
+                        <input required="" type="text" name="province" value="@c.province" hidden/>
+                        <input required="" type="text" name="amount" value="@total" hidden>
+
+
+                        @*<div class="mb-20">
+                                <h5>Additional information</h5>
+                            </div>
+                            <div class="form-group mb-30">
+                                <textarea rows="5" placeholder="Order notes"></textarea>
+                            </div>*@
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="order_review">
+                            <div class="mb-20">
+                                <h4>Your Orders</h4>
+                            </div>
+                            <div class="table-responsive order_table text-center">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="2">Product</th>
+                                            <th>Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in list)
+                                        {
+                                            <tr>
+                                                <td class="image product-thumbnail"><img src="@Url.Content(item.picture)" height="100px" width="100px" alt="#"></td>
+                                                <td>
+                                                    <h5><a href="@Url.Action("SingleProduct", "Home", new { id = item.id })">@item.name</a></h5> <span class="product-qty">x @item.quan</span>
+                                                </td>
+                                                <td>
+                                                    @if (item.sale_percent != "0" && item.sale_percent != null)
+                                                    {
+                                                        int old_price = Convert.ToInt32(item.sale_price);
+                                                        int sale_percent = Convert.ToInt32(item.sale_percent);
+                                                        int discount = (old_price * sale_percent) / 100;
+                                                        int new_price = old_price - discount;
+                                                        <span>Rs. @new_price</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span>Rs. @Convert.ToInt32(item.sale_price)</span>
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                        <tr>
+                                            <th>SubTotal</th>
+                                            <td class="product-subtotal" colspan="2">Rs. @total_bill</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Shipping</th>
+                                            @{int dc = 0; }
+                                            <td colspan="2">
+                                                @if (@c.province == "Punjab")
+                                                {
+                                                    dc = p_dc;
+                                                }
+                                                else if (c.province == "Sindh")
+                                                {
+                                                    dc = s_dc;
+                                                }
+                                                else if (c.province == "KPK")
+                                                {
+                                                    dc = kpk_dc;
+                                                }
+                                                else if (c.province == "Balochistan")
+                                                {
+                                                    dc = b_dc;
+                                                }
+                                                else if (c.province == "Gilgit Baltistan")
+                                                {
+                                                    dc = gb_dc;
+                                                }
+                                                <em>@dc</em>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Total</th>
+                                            @{total_bill += dc;}
+                                            <td colspan="2" class="product-subtotal"><span class="font-xl text-brand fw-900">Rs. @total_bill</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="bt-1 border-color-1 mt-30 mb-30"></div>
+                            <div class="payment_method">
+                                <div class="mb-25">
+                                    <h5>Payment</h5>
+                                </div>
+                                <div class="payment_option">
+                                    <div class="custome-radio">
+                                        <input class="form-check-input" required type="radio" value="CashonDelivery" name="payment_type" id="exampleRadios3" checked="checked">
+                                        <label class="form-check-label" for="exampleRadios3" data-bs-toggle="collapse" data-target="#bankTranfer" aria-controls="bankTranfer">Cash on Delivery</label>
+
+                                    </div>
+
+                                    <div class="custome-radio">
+                                        <input class="form-check-input" required value="PayPal" type="radio" name="payment_type" id="exampleRadios5" checked="">
+                                        <label class="form-check-label" for="exampleRadios5" data-bs-toggle="collapse" data-target="#paypal" aria-controls="paypal">Paypal</label>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-fill-out btn-block mt-30">Place Order</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+</main>
+
+
